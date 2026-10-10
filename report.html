@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NetPacket Inspector - Forensic Report: sample_traffic.pcap</title>
+<style>
+  :root {
+    --bg-dark: #0f172a;
+    --bg-card: #1e293b;
+    --border: #334155;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent-cyan: #06b6d4;
+    --accent-green: #10b981;
+    --accent-orange: #f59e0b;
+    --accent-red: #ef4444;
+    --accent-purple: #8b5cf6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    padding: 24px;
+    line-height: 1.5;
+  }
+  .header {
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header h1 { color: var(--accent-cyan); font-size: 24px; font-weight: 700; letter-spacing: 0.5px; }
+  .header .meta { color: var(--text-muted); font-size: 13px; }
+  
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-card .label { color: var(--text-muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-card .val { font-size: 24px; font-weight: 700; color: var(--accent-cyan); margin-top: 4px; }
+
+  .section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 24px;
+  }
+  .section h2 { font-size: 16px; color: var(--accent-green); margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 800px) { .row-2 { grid-template-columns: 1fr; } }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+  th { background: #0f172a; color: var(--text-muted); padding: 10px; font-weight: 600; border-bottom: 1px solid var(--border); }
+  td { padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  tr:hover { background: rgba(255,255,255,0.03); }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; color: var(--accent-cyan); font-size: 12px; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .badge-tcp { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #3b82f6; }
+  .badge-udp { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
+  .badge-dns { background: rgba(6, 182, 212, 0.2); color: #22d3ee; border: 1px solid #06b6d4; }
+  .badge-http { background: rgba(139, 92, 246, 0.2); color: #a78bfa; border: 1px solid #8b5cf6; }
+  .badge-icmp { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; }
+  .badge-arp { background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid #ec4899; }
+  .badge-tls { background: rgba(20, 184, 166, 0.2); color: #2dd4bf; border: 1px solid #14b8a6; }
+
+  .insight-card {
+    background: rgba(255,255,255,0.02);
+    border-left: 4px solid var(--accent-cyan);
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  .insight-warning { border-left-color: var(--accent-orange); }
+  .insight-danger { border-left-color: var(--accent-red); }
+  .insight-header { font-size: 13px; color: var(--text-main); margin-bottom: 4px; }
+  .insight-body { font-size: 12px; color: var(--text-muted); }
+  .info-col { word-break: break-all; font-family: monospace; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>⚡ NetPacket Inspector - Network Capture Report</h1>
+    <div class="meta">Analyzed File: <strong>sample_traffic.pcap</strong></div>
+  </div>
+  <div class="meta" style="text-align: right;">
+    Generated: Forensic Engine<br>
+    Status: Analysis Completed
+  </div>
+</div>
+
+<div class="grid">
+  <div class="stat-card">
+    <div class="label">Total Packets</div>
+    <div class="val">10</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Total Volume</div>
+    <div class="val">808 B</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Capture Duration</div>
+    <div class="val">2.25 s</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Avg Packet Size</div>
+    <div class="val">80.8 bytes</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Average Rate</div>
+    <div class="val">4.44 pkts/s</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>🛡️ Security & Traffic Insights</h2>
+  <div class='insight-card insight-info'><div class='insight-header'><strong>[INFO / WARNING] Unencrypted HTTP</strong></div><div class='insight-body'>Detected 2 unencrypted HTTP packets. Sensitive data or credentials might be in plaintext.</div></div><div class='insight-card insight-info'><div class='insight-header'><strong>[INFO] DNS Activity</strong></div><div class='insight-body'>Resolved 1 unique domain queries (e.g. ['google.com (A)']).</div></div>
+</div>
+
+<div class="row-2">
+  <div class="section">
+    <h2>📊 Protocol Breakdown</h2>
+    <table>
+      <thead><tr><th>Protocol</th><th>Packets</th><th>Percentage</th></tr></thead>
+      <tbody><tr><td><span class='badge badge-tcp'>TCP</span></td><td>3</td><td>30.0%</td></tr><tr><td><span class='badge badge-arp'>ARP</span></td><td>2</td><td>20.0%</td></tr><tr><td><span class='badge badge-icmp'>ICMP</span></td><td>2</td><td>20.0%</td></tr><tr><td><span class='badge badge-http'>HTTP</span></td><td>2</td><td>20.0%</td></tr><tr><td><span class='badge badge-dns'>DNS</span></td><td>1</td><td>10.0%</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>🌐 Top Active Nodes</h2>
+    <table>
+      <thead><tr><th>Source IP</th><th>Packets</th><th>Volume</th></tr></thead>
+      <tbody><tr><td><code>192.168.1.50</code></td><td>6</td><td>444 B</td></tr><tr><td><code>93.184.216.34</code></td><td>2</td><td>248 B</td></tr><tr><td><code>192.168.1.1</code></td><td>1</td><td>42 B</td></tr><tr><td><code>1.1.1.1</code></td><td>1</td><td>74 B</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>🔍 Dissected Packet Stream (First 200 Packets)</h2>
+  <div style="overflow-x: auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Time (s)</th>
+          <th>Source</th>
+          <th>Destination</th>
+          <th>Protocol</th>
+          <th>Length</th>
+          <th>Summary / Info</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class='proto-arp'><td>1</td><td>0.000000</td><td><code>192.168.1.50</code></td><td><code>192.168.1.1</code></td><td><span class='badge badge-arp'>ARP</span></td><td>42</td><td class='info-col'>ARP Request (who-has) 192.168.1.1 tell 192.168.1.50</td></tr><tr class='proto-arp'><td>2</td><td>0.250000</td><td><code>192.168.1.1</code></td><td><code>192.168.1.50</code></td><td><span class='badge badge-arp'>ARP</span></td><td>42</td><td class='info-col'>ARP Reply (is-at) 192.168.1.50 tell 192.168.1.1</td></tr><tr class='proto-dns'><td>3</td><td>1.500000</td><td><code>192.168.1.50</code></td><td><code>8.8.8.8</code></td><td><span class='badge badge-dns'>DNS</span></td><td>70</td><td class='info-col'>Standard Query: google.com (A)</td></tr><tr class='proto-icmp'><td>4</td><td>1.750000</td><td><code>192.168.1.50</code></td><td><code>1.1.1.1</code></td><td><span class='badge badge-icmp'>ICMP</span></td><td>74</td><td class='info-col'>8 (Echo (ping) Request)</td></tr><tr class='proto-icmp'><td>5</td><td>1.000000</td><td><code>1.1.1.1</code></td><td><code>192.168.1.50</code></td><td><span class='badge badge-icmp'>ICMP</span></td><td>74</td><td class='info-col'>0 (Echo (ping) Reply)</td></tr><tr class='proto-tcp'><td>6</td><td>1.250000</td><td><code>192.168.1.50</code></td><td><code>93.184.216.34</code></td><td><span class='badge badge-tcp'>TCP</span></td><td>54</td><td class='info-col'>49200 -> 80 [SYN] Seq=1000000 Ack=0 Win=65535 Len=0</td></tr><tr class='proto-tcp'><td>7</td><td>2.500000</td><td><code>93.184.216.34</code></td><td><code>192.168.1.50</code></td><td><span class='badge badge-tcp'>TCP</span></td><td>54</td><td class='info-col'>80 -> 49200 [SYN, ACK] Seq=5000000 Ack=1000001 Win=65535 Len=0</td></tr><tr class='proto-tcp'><td>8</td><td>2.750000</td><td><code>192.168.1.50</code></td><td><code>93.184.216.34</code></td><td><span class='badge badge-tcp'>TCP</span></td><td>54</td><td class='info-col'>49200 -> 80 [ACK] Seq=1000001 Ack=5000001 Win=65535 Len=0</td></tr><tr class='proto-http'><td>9</td><td>2.000000</td><td><code>192.168.1.50</code></td><td><code>93.184.216.34</code></td><td><span class='badge badge-http'>HTTP</span></td><td>150</td><td class='info-col'>GET /index.html HTTP/1.1</td></tr><tr class='proto-http'><td>10</td><td>2.250000</td><td><code>93.184.216.34</code></td><td><code>192.168.1.50</code></td><td><span class='badge badge-http'>HTTP</span></td><td>194</td><td class='info-col'>HTTP/1.1 200 OK</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

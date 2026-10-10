@@ -1,0 +1,43 @@
+# ==============================================================================
+# NetPacket-Sentinel-AI .gitignore
+# ==============================================================================
+
+# Heavy Machine Learning Model Checkpoints (>30MB)
+models/binary_model.pkl
+models/multiclass_model.pkl
+*.pkl.gz
+
+# Temporary uploads & cache
+models/temp_uploads/
+temp_dash_tab-*.html
+test_generated_dashboard.html
+
+# Scratch scripts & temporary compile outputs
+compile_err.txt
+compile_out.txt
+syntax_err.txt
+marker.txt
+test_file.txt
+apply_step*.py
+check_*.py
+test_ast.py
+test_syntax.py
+show_syntax_err.py
+verify_dashboard_tabs.py
+test_gen_dashboard.py
+convert_to_placeholders.py
+
+# Python bytecode & environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp

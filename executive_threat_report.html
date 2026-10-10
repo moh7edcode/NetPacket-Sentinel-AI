@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NetPacket Inspector Pro - Executive Forensic SPA Report</title>
+<style>
+  :root {
+    --bg-page: #f8fafc;
+    --bg-card: #ffffff;
+    --bg-subtle: #f0f7ff;
+    --border-blue: #bfdbfe;
+    --border-blue-dark: #2563eb;
+    --text-navy: #1e3a8a;
+    --text-body: #0f172a;
+    --text-muted: #64748b;
+    --accent-blue: #2563eb;
+    --accent-sky: #0284c7;
+    --accent-red: #dc2626;
+    --accent-orange: #ea580c;
+    --accent-green: #16a34a;
+    --accent-purple: #7c3aed;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-body);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    padding: 24px;
+    line-height: 1.5;
+  }
+  .header {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-blue);
+    border-radius: 14px;
+    padding: 20px 26px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.08);
+  }
+  .header h1 { font-size: 22px; color: var(--text-navy); font-weight: 800; display: flex; align-items: center; gap: 10px; }
+  .header .meta { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
+  .header-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    background: #eff6ff;
+    color: var(--accent-blue);
+    border: 1px solid var(--border-blue);
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .posture-badge {
+    background: #fef2f2;
+    border: 2px solid #fca5a5;
+    color: #dc2626;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .metric-card {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-blue);
+    border-top: 4px solid var(--accent-blue);
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.12);
+  }
+  .metric-card .title { font-size: 11px; color: var(--text-navy); font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px; }
+  .metric-card .value { font-size: 28px; font-weight: 800; color: var(--text-body); margin-top: 6px; }
+  .val-crit { color: var(--accent-red) !important; }
+  .val-high { color: var(--accent-orange) !important; }
+
+  .section {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-blue);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.06);
+  }
+  .section h2 {
+    font-size: 16px;
+    color: var(--text-navy);
+    font-weight: 800;
+    margin-bottom: 18px;
+    border-bottom: 1.5px solid #eff6ff;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .threat-card {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-blue);
+    border-left: 5px solid var(--accent-blue);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  }
+  .threat-critical { border-left-color: var(--accent-red); background: #fef2f2; }
+  .threat-high { border-left-color: var(--accent-orange); background: #fff7ed; }
+  .threat-medium { border-left-color: #f59e0b; background: #fffbeb; }
+
+  .threat-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 8px; }
+  .threat-title { font-size: 14px; font-weight: 800; color: var(--text-navy); margin-left: 6px; }
+  .threat-meta { font-size: 12px; color: var(--text-muted); }
+  .threat-desc { font-size: 13px; color: var(--text-body); margin-bottom: 8px; }
+  .threat-pkts { font-size: 12px; color: var(--text-navy); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+
+  .sev-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+  .sev-critical { background: #fee2e2; color: #b91c1c; border: 1px solid #f87171; }
+  .sev-high { background: #ffedd5; color: #c2410c; border: 1px solid #fb923c; }
+  .sev-medium { background: #fef3c7; color: #b45309; border: 1px solid #fcd34d; }
+  .mitre-tag { background: #eff6ff; border: 1px solid var(--border-blue); color: var(--accent-blue); font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-left: 6px; }
+
+  .evidence-box {
+    background: #f8fafc;
+    border: 1px dashed var(--border-blue);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--text-body);
+    margin-bottom: 8px;
+  }
+
+  /* Interactive Elements */
+  .ip-link { color: var(--accent-blue); text-decoration: none; font-weight: 700; cursor: pointer; border-bottom: 1px dashed var(--border-blue); }
+  .ip-link:hover { color: var(--accent-sky); text-decoration: underline; }
+  .filter-link { color: var(--accent-green); text-decoration: none; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .filter-link:hover { text-decoration: underline; }
+
+  .btn-filter-pkts {
+    background: var(--accent-blue);
+    color: #ffffff;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(37, 99, 235, 0.2);
+    transition: background 0.15s;
+  }
+  .btn-filter-pkts:hover { background: #1d4ed8; }
+
+  /* Timeline */
+  .timeline-item { display: flex; gap: 16px; margin-bottom: 16px; position: relative; }
+  .timeline-time { min-width: 75px; font-family: monospace; font-size: 12px; color: var(--accent-blue); font-weight: 800; text-align: right; padding-top: 4px; }
+  .timeline-content { background: var(--bg-card); border: 1.5px solid var(--border-blue); border-left: 4px solid var(--accent-blue); border-radius: 8px; padding: 12px 16px; flex-grow: 1; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03); }
+  .timeline-header { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+  .phase-tag { background: #e0e7ff; color: var(--accent-blue); font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; border: 1px solid var(--border-blue); }
+
+  /* Playbook */
+  .playbook-item { background: var(--bg-card); border: 1.5px solid var(--border-blue); border-radius: 8px; padding: 14px 18px; margin-bottom: 12px; border-left: 5px solid; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03); }
+  .pb-crit { border-left-color: var(--accent-red); background: #fef2f2; }
+  .pb-high { border-left-color: var(--accent-orange); background: #fff7ed; }
+  .pb-med { border-left-color: #f59e0b; background: #fffbeb; }
+  .pb-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap; }
+  .pb-badge { font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; }
+  .pb-badge-crit { background: #fee2e2; color: #b91c1c; border: 1px solid #f87171; }
+  .pb-badge-high { background: #ffedd5; color: #c2410c; border: 1px solid #fb923c; }
+  .pb-badge-med { background: #fef3c7; color: #b45309; border: 1px solid #fcd34d; }
+  .pb-action { font-weight: 800; color: var(--text-navy); font-size: 14px; }
+  .pb-target { font-size: 12px; color: var(--text-muted); margin-left: auto; }
+  .pb-instructions { font-size: 13px; color: var(--text-body); margin-bottom: 6px; }
+  .pb-rationale { font-size: 12px; color: var(--text-muted); }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #f0f7ff; color: var(--text-navy); padding: 10px 14px; font-weight: 700; border-bottom: 2px solid var(--border-blue); text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #f1f5f9; color: var(--text-body); }
+  tr:hover { background: #f8fafc; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; color: var(--accent-blue); background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+
+  .badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; margin: 1px; }
+  .badge-tcp { background: #eff6ff; color: #1d4ed8; border: 1px solid #93c5fd; }
+  .badge-udp { background: #ecfdf5; color: #047857; border: 1px solid #6ee7b7; }
+  .badge-dns { background: #f0fdfa; color: #0f766e; border: 1px solid #5eead4; }
+  .badge-http { background: #f5f3ff; color: #6d28d9; border: 1px solid #c4b5fd; }
+  .badge-icmp { background: #fffbeb; color: #b45309; border: 1px solid #fcd34d; }
+  .badge-arp { background: #fdf2f8; color: #be185d; border: 1px solid #f9a8d4; }
+
+  .info-col { word-break: break-all; font-family: monospace; font-size: 12px; color: var(--text-body); }
+
+  /* Interactive Modal */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15, 23, 42, 0.6);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .modal-box {
+    background: #ffffff;
+    border: 2px solid var(--accent-blue);
+    border-radius: 14px;
+    width: 90%;
+    max-width: 750px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 24px;
+    box-shadow: 0 20px 30px -5px rgba(37, 99, 235, 0.2);
+  }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid var(--border-blue); padding-bottom: 12px; margin-bottom: 16px; }
+  .modal-title { font-size: 18px; font-weight: 800; color: var(--text-navy); }
+  .btn-close { background: transparent; border: none; color: var(--text-muted); font-size: 22px; cursor: pointer; }
+  .btn-close:hover { color: var(--accent-red); }
+
+  .search-bar-wrap { margin-bottom: 14px; display: flex; gap: 8px; align-items: center; }
+  .search-input {
+    background: #ffffff;
+    border: 1.5px solid var(--border-blue);
+    color: var(--text-body);
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    flex-grow: 1;
+    font-family: monospace;
+    box-shadow: 0 1px 4px rgba(37, 99, 235, 0.05);
+  }
+  .search-input:focus { outline: none; border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="display:flex; align-items:center; gap:16px;">
+    <div style="width:64px; height:64px; border-radius:50%; border:2.5px solid var(--accent-blue); background:#ffffff; overflow:hidden; box-shadow:0 0 14px rgba(37,99,235,0.25); flex-shrink:0; display:flex; align-items:center; justify-content:center;">
+      <img src="data:image/jpeg;base64,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" alt="Kali x Wireshark Cyber Defense Emblem" style="width:100%; height:100%; object-fit:cover;">
+    </div>
+    <div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <h1 style="font-size:22px; color:var(--text-navy); margin:0;">⚡ NetPacket Inspector Pro</h1>
+        <span class="header-badge">SMART SOC PLATFORM</span>
+      </div>
+      <div style="font-size:12px; color:var(--accent-blue); font-weight:700; margin-top:3px;">منظومة التحليل الجنائي السيبراني واعتراض الحزم المتقدمة</div>
+      <div class="meta" style="margin-top:3px;">Target Capture: <strong style="color:var(--text-navy);">forensic_attack_sample.pcap</strong> | Generated: <strong>2026-09-21 19:21:13</strong></div>
+    </div>
+  </div>
+  <div class="posture-badge">
+    SECURITY POSTURE<br>CRITICAL RISK
+  </div>
+</div>
+
+<div class="grid-4">
+  <div class="metric-card">
+    <div class="title">Critical Incidents</div>
+    <div class="value val-crit">2</div>
+  </div>
+  <div class="metric-card">
+    <div class="title">High Severity Alerts</div>
+    <div class="value val-high">2</div>
+  </div>
+  <div class="metric-card">
+    <div class="title">Total Packets</div>
+    <div class="value">18</div>
+  </div>
+  <div class="metric-card">
+    <div class="title">Total Volume</div>
+    <div class="value">1.54 KB</div>
+  </div>
+</div>
+
+<div class="section">
+  <h2><span>🛡️ Identified Malicious Tactics & Network Incidents (MITRE ATT&CK)</span></h2>
+  
+            <div class="threat-card threat-critical" id="threat-card-0">
+              <div class="threat-head">
+                <div>
+                  <span class="sev-badge sev-critical">CRITICAL</span>
+                  <span class="threat-title">DNS Tunneling / Data Exfiltration Detected</span>
+                  <span class="mitre-tag">T1048.003 / T1071.004</span>
+                </div>
+                <div class="threat-meta">
+                  Source: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.100')">192.168.1.100</a> &rarr; 
+                  Target: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('DNS Server')">DNS Server</a>
+                </div>
+              </div>
+              <div class="threat-desc">Identified 3 anomalous DNS queries with encoded/high-entropy subdomains indicative of covert channel exfiltration.</div>
+              <div class='evidence-box'><strong>Sample Domains:</strong> <code>['dGhpcyBpcyBhbiBleGZpbHRyYXRlZCBwYXNzd29yZA.exfil.covert-tunnel.org', 'YWRtaW46U3VwZXJTZWNyZXRLZXkyMDI2.exfil.covert-tunnel.org', 'c2VjcmV0X2ZpbmFuY2lhbF9yZXBvcnRfcGRm.exfil.covert-tunnel.org']</code> | <strong>Suspicious Queries Count:</strong> <code>3</code> | <strong>Decoded Data Sample:</strong> <code>['this is an exfiltrated password', 'admin:SuperSecretKey2026']</code></div>
+              <div class="threat-pkts">
+                <strong>Trigger Packets (3):</strong> <code>#13, #14, #15</code>
+                <button class="btn-filter-pkts" onclick="filterByPacketList('13,14,15')">🎯 Filter Table for These Packets</button>
+              </div>
+            </div>
+            
+            <div class="threat-card threat-critical" id="threat-card-1">
+              <div class="threat-head">
+                <div>
+                  <span class="sev-badge sev-critical">CRITICAL</span>
+                  <span class="threat-title">ARP Poisoning / Man-in-the-Middle (MitM) Attempt</span>
+                  <span class="mitre-tag">T1557.002 (ARP Poisoning)</span>
+                </div>
+                <div class="threat-meta">
+                  Source: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('00:aa:bb:cc:dd:ee, de:ad:be:ef:ca:fe')">00:aa:bb:cc:dd:ee, de:ad:be:ef:ca:fe</a> &rarr; 
+                  Target: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.1')">192.168.1.1</a>
+                </div>
+              </div>
+              <div class="threat-desc">IP 192.168.1.1 is claimed by multiple conflicting MAC addresses (00:aa:bb:cc:dd:ee, de:ad:be:ef:ca:fe), indicating an active ARP spoofing attack.</div>
+              <div class='evidence-box'><strong>Conflicting MACs:</strong> <code>['00:aa:bb:cc:dd:ee', 'de:ad:be:ef:ca:fe']</code> | <strong>Target IP:</strong> <code>192.168.1.1</code></div>
+              <div class="threat-pkts">
+                <strong>Trigger Packets (2):</strong> <code>#1, #2</code>
+                <button class="btn-filter-pkts" onclick="filterByPacketList('1,2')">🎯 Filter Table for These Packets</button>
+              </div>
+            </div>
+            
+            <div class="threat-card threat-high" id="threat-card-2">
+              <div class="threat-head">
+                <div>
+                  <span class="sev-badge sev-high">HIGH</span>
+                  <span class="threat-title">TCP SYN Port Scan Activity</span>
+                  <span class="mitre-tag">T1046 (Network Service Scanning)</span>
+                </div>
+                <div class="threat-meta">
+                  Source: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.100')">192.168.1.100</a> &rarr; 
+                  Target: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')">192.168.1.50</a>
+                </div>
+              </div>
+              <div class="threat-desc">Host 192.168.1.100 probed 10 unique TCP ports across 1 destination(s) using half-open SYN packets.</div>
+              <div class='evidence-box'><strong>Probed Ports:</strong> <code>[21, 22, 23, 80, 443, 445, 1433, 3306, 3389, 8080]</code> | <strong>Total SYN Packets:</strong> <code>10</code></div>
+              <div class="threat-pkts">
+                <strong>Trigger Packets (10):</strong> <code>#3, #4, #5, #6, #7, #8, #9, #10, #11, #12</code>
+                <button class="btn-filter-pkts" onclick="filterByPacketList('3,4,5,6,7,8,9,10,11,12')">🎯 Filter Table for These Packets</button>
+              </div>
+            </div>
+            
+            <div class="threat-card threat-high" id="threat-card-3">
+              <div class="threat-head">
+                <div>
+                  <span class="sev-badge sev-high">HIGH</span>
+                  <span class="threat-title">Cleartext Credential Leak & Exfiltration</span>
+                  <span class="mitre-tag">T1040 (Network Sniffing) / T1552</span>
+                </div>
+                <div class="threat-meta">
+                  Source: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')">192.168.1.50</a> &rarr; 
+                  Target: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('198.51.100.23')">198.51.100.23</a>
+                </div>
+              </div>
+              <div class="threat-desc">Identified 2 packet(s) transmitting sensitive authentication credentials in unencrypted plaintext (HTTP POST Plaintext Password, HTTP Basic Auth).</div>
+              <div class='evidence-box'><strong>Credential Types:</strong> <code>['HTTP POST Plaintext Password', 'HTTP Basic Auth']</code> | <strong>Exposed Credentials Sample:</strong> <code>['admin:CorporateSuperAdmin2026!']</code></div>
+              <div class="threat-pkts">
+                <strong>Trigger Packets (2):</strong> <code>#16, #17</code>
+                <button class="btn-filter-pkts" onclick="filterByPacketList('16,17')">🎯 Filter Table for These Packets</button>
+              </div>
+            </div>
+            
+            <div class="threat-card threat-medium" id="threat-card-4">
+              <div class="threat-head">
+                <div>
+                  <span class="sev-badge sev-medium">MEDIUM</span>
+                  <span class="threat-title">Suspicious Backdoor / C2 Port Activity</span>
+                  <span class="mitre-tag">T1571 (Non-Standard Port)</span>
+                </div>
+                <div class="threat-meta">
+                  Source: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')">192.168.1.50</a> &rarr; 
+                  Target: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('198.51.100.23')">198.51.100.23</a>
+                </div>
+              </div>
+              <div class="threat-desc">Detected communication matching known malicious backdoor / C2 signatures (Port 4444 (Metasploit Default Listener / Reverse Shell)).</div>
+              <div class='evidence-box'><strong>Matched Services:</strong> <code>['Port 4444 (Metasploit Default Listener / Reverse Shell)']</code></div>
+              <div class="threat-pkts">
+                <strong>Trigger Packets (1):</strong> <code>#18</code>
+                <button class="btn-filter-pkts" onclick="filterByPacketList('18')">🎯 Filter Table for These Packets</button>
+              </div>
+            </div>
+            
+</div>
+
+<div class="section">
+  <h2><span>⏳ Chronological Cyber Attack Lifecycle (Kill-Chain Timeline)</span></h2>
+  <div class="timeline-container">
+    
+            <div class="timeline-item">
+              <div class="timeline-time">+0.0s</div>
+              <div class="timeline-content">
+                <div class="timeline-header">
+                  <span class="phase-tag">Credential Access</span>
+                  <strong style="color:#1e3a8a;">ARP Poisoning / Man-in-the-Middle (MitM) Attempt</strong>
+                  <span class="mitre-tag">T1557.002 (ARP Poisoning)</span>
+                </div>
+                <div style="font-size:12px; color:#475569; margin:4px 0;">IP 192.168.1.1 is claimed by multiple conflicting MAC addresses (00:aa:bb:cc:dd:ee, de:ad:be:ef:ca:fe), indicating an active ARP spoofing attack.</div>
+                <div style="font-size:11px;">
+                  Attacker: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('00:aa:bb:cc:dd:ee, de:ad:be:ef:ca:fe')">00:aa:bb:cc:dd:ee, de:ad:be:ef:ca:fe</a> &rarr; 
+                  Victim: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.1')">192.168.1.1</a> | 
+                  <a href="javascript:void(0)" class="filter-link" onclick="filterByPacketList('1,2')">View 2 Packets</a>
+                </div>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-time">+0.3s</div>
+              <div class="timeline-content">
+                <div class="timeline-header">
+                  <span class="phase-tag">Reconnaissance</span>
+                  <strong style="color:#1e3a8a;">TCP SYN Port Scan Activity</strong>
+                  <span class="mitre-tag">T1046 (Network Service Scanning)</span>
+                </div>
+                <div style="font-size:12px; color:#475569; margin:4px 0;">Host 192.168.1.100 probed 10 unique TCP ports across 1 destination(s) using half-open SYN packets.</div>
+                <div style="font-size:11px;">
+                  Attacker: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.100')">192.168.1.100</a> &rarr; 
+                  Victim: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')">192.168.1.50</a> | 
+                  <a href="javascript:void(0)" class="filter-link" onclick="filterByPacketList('3,4,5,6,7,8,9,10,11,12')">View 10 Packets</a>
+                </div>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-time">+2.25s</div>
+              <div class="timeline-content">
+                <div class="timeline-header">
+                  <span class="phase-tag">Credential Access</span>
+                  <strong style="color:#1e3a8a;">Cleartext Credential Leak & Exfiltration</strong>
+                  <span class="mitre-tag">T1040 (Network Sniffing) / T1552</span>
+                </div>
+                <div style="font-size:12px; color:#475569; margin:4px 0;">Identified 2 packet(s) transmitting sensitive authentication credentials in unencrypted plaintext (HTTP POST Plaintext Password, HTTP Basic Auth).</div>
+                <div style="font-size:11px;">
+                  Attacker: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')">192.168.1.50</a> &rarr; 
+                  Victim: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('198.51.100.23')">198.51.100.23</a> | 
+                  <a href="javascript:void(0)" class="filter-link" onclick="filterByPacketList('16,17')">View 2 Packets</a>
+                </div>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-time">+2.55s</div>
+              <div class="timeline-content">
+                <div class="timeline-header">
+                  <span class="phase-tag">Command & Control</span>
+                  <strong style="color:#1e3a8a;">Suspicious Backdoor / C2 Port Activity</strong>
+                  <span class="mitre-tag">T1571 (Non-Standard Port)</span>
+                </div>
+                <div style="font-size:12px; color:#475569; margin:4px 0;">Detected communication matching known malicious backdoor / C2 signatures (Port 4444 (Metasploit Default Listener / Reverse Shell)).</div>
+                <div style="font-size:11px;">
+                  Attacker: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')">192.168.1.50</a> &rarr; 
+                  Victim: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('198.51.100.23')">198.51.100.23</a> | 
+                  <a href="javascript:void(0)" class="filter-link" onclick="filterByPacketList('18')">View 1 Packets</a>
+                </div>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-time">+2.8s</div>
+              <div class="timeline-content">
+                <div class="timeline-header">
+                  <span class="phase-tag">Exfiltration</span>
+                  <strong style="color:#1e3a8a;">DNS Tunneling / Data Exfiltration Detected</strong>
+                  <span class="mitre-tag">T1048.003 / T1071.004</span>
+                </div>
+                <div style="font-size:12px; color:#475569; margin:4px 0;">Identified 3 anomalous DNS queries with encoded/high-entropy subdomains indicative of covert channel exfiltration.</div>
+                <div style="font-size:11px;">
+                  Attacker: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.100')">192.168.1.100</a> &rarr; 
+                  Victim: <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('DNS Server')">DNS Server</a> | 
+                  <a href="javascript:void(0)" class="filter-link" onclick="filterByPacketList('13,14,15')">View 3 Packets</a>
+                </div>
+              </div>
+            </div>
+            
+  </div>
+</div>
+
+<div class="section">
+  <h2><span>📋 Automated SOC Incident Response Remediation Playbook</span></h2>
+  
+            <div class="playbook-item pb-crit">
+              <div class="pb-header">
+                <span class="pb-badge pb-badge-crit">Step 1 : URGENT (P0)</span>
+                <span class="pb-action">Perimeter Firewall Egress & Ingress Block</span>
+                <span class="pb-target">Target: <code>198.51.100.23</code></span>
+              </div>
+              <div class="pb-instructions">Immediately blacklist external C2 IP addresses (198.51.100.23) on all edge firewalls, UTMs, and SIEM drop rules.</div>
+              <div class="pb-rationale"><strong>Rationale:</strong> Sever active Command & Control communication and prevent ongoing data exfiltration.</div>
+            </div>
+            
+            <div class="playbook-item pb-crit">
+              <div class="pb-header">
+                <span class="pb-badge pb-badge-crit">Step 2 : CRITICAL (P0)</span>
+                <span class="pb-action">Forced Password Reset & Session Revocation</span>
+                <span class="pb-target">Target: <code>Compromised Accounts</code></span>
+              </div>
+              <div class="pb-instructions">Trigger immediate password reset and revoke all active Kerberos/OAuth tokens for accounts transmitted in cleartext (Identified: admin:CorporateSuperAdmin2026!).</div>
+              <div class="pb-rationale"><strong>Rationale:</strong> Prevent attacker from using captured credentials for lateral movement or privilege escalation.</div>
+            </div>
+            
+            <div class="playbook-item pb-high">
+              <div class="pb-header">
+                <span class="pb-badge pb-badge-high">Step 3 : HIGH (P1)</span>
+                <span class="pb-action">Switchport Security & Dynamic ARP Inspection (DAI)</span>
+                <span class="pb-target">Target: <code>Local LAN Switch Infrastructure</code></span>
+              </div>
+              <div class="pb-instructions">Enable Dynamic ARP Inspection (DAI) and DHCP Snooping on local managed switches. Flush corrupted ARP caches on default gateway.</div>
+              <div class="pb-rationale"><strong>Rationale:</strong> Eliminate Man-in-the-Middle eavesdropping on the local network segment.</div>
+            </div>
+            
+            <div class="playbook-item pb-high">
+              <div class="pb-header">
+                <span class="pb-badge pb-badge-high">Step 4 : HIGH (P1)</span>
+                <span class="pb-action">Host Isolation & EDR Forensics</span>
+                <span class="pb-target">Target: <code>192.168.1.100, 192.168.1.1, 192.168.1.50</code></span>
+              </div>
+              <div class="pb-instructions">Isolate internal endpoints (192.168.1.100, 192.168.1.1, 192.168.1.50) from the local VLAN to prevent malware propagation. Collect memory dump and autorun artifacts.</div>
+              <div class="pb-rationale"><strong>Rationale:</strong> Contain patient-zero machine and preserve volatile RAM forensics.</div>
+            </div>
+            
+            <div class="playbook-item pb-med">
+              <div class="pb-header">
+                <span class="pb-badge pb-badge-med">Step 5 : MEDIUM (P2)</span>
+                <span class="pb-action">DNS Sinkholing & Protocol Inspection</span>
+                <span class="pb-target">Target: <code>Internal DNS Resolvers</code></span>
+              </div>
+              <div class="pb-instructions">Configure internal DNS resolvers to sinkhole queries matching exfil subdomains and disallow direct outbound UDP 53 traffic from endpoints.</div>
+              <div class="pb-rationale"><strong>Rationale:</strong> Close DNS covert tunneling vector.</div>
+            </div>
+            
+</div>
+
+<div class="section">
+  <h2><span>🗺️ IP Geolocation & Domain Name Resolution Map</span></h2>
+  <div style="overflow-x: auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Endpoint IP</th>
+          <th>Correlated Domains / Services</th>
+          <th>Country</th>
+          <th>City / Region</th>
+          <th>ASN & Routing</th>
+          <th>ISP / Organization</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+            <tr>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('198.51.100.23')"><code>198.51.100.23</code></a> <span class='badge' style='background:#ecfdf5; color:#047857; border:1px solid #6ee7b7;'>PUBLIC</span></td>
+              <td style="color:#0284c7; font-weight:600;">internal-portal.corp</td>
+              <td><strong>United States</strong> <span style="color:#64748b; font-size:11px;">(US)</span></td>
+              <td>Chicago, Illinois</td>
+              <td><code>AS64496 TEST-NET-2</code></td>
+              <td style="font-size:11px; color:#64748b;">Bulletproof Hosting Infrastructure</td>
+            </tr>
+            
+            <tr>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('8.8.8.8')"><code>8.8.8.8</code></a> <span class='badge' style='background:#ecfdf5; color:#047857; border:1px solid #6ee7b7;'>PUBLIC</span></td>
+              <td style="color:#0284c7; font-weight:600;">YWRtaW46U3VwZXJTZWNyZXRLZXkyMDI2.exfil.covert-tunnel.org<br>c2VjcmV0X2ZpbmFuY2lhbF9yZXBvcnRfcGRm.exfil.covert-tunnel.org<br>dGhpcyBpcyBhbiBleGZpbHRyYXRlZCBwYXNzd29yZA.exfil.covert-tunnel.org</td>
+              <td><strong>United States</strong> <span style="color:#64748b; font-size:11px;">(US)</span></td>
+              <td>Mountain View, California</td>
+              <td><code>AS15169 Google LLC</code></td>
+              <td style="font-size:11px; color:#64748b;">Google LLC</td>
+            </tr>
+            
+            <tr>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.1')"><code>192.168.1.1</code></a> <span class='badge' style='background:#f1f5f9; color:#475569; border:1px solid #cbd5e1;'>LAN</span></td>
+              <td style="color:#0284c7; font-weight:600;">(Internal Network Node)</td>
+              <td><strong>Local Network (Internal)</strong> <span style="color:#64748b; font-size:11px;">(LAN)</span></td>
+              <td>Internal Subnet</td>
+              <td><code>RFC 1918 Private IP</code></td>
+              <td style="font-size:11px; color:#64748b;">Local Area Network (Private Space)</td>
+            </tr>
+            
+            <tr>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.100')"><code>192.168.1.100</code></a> <span class='badge' style='background:#f1f5f9; color:#475569; border:1px solid #cbd5e1;'>LAN</span></td>
+              <td style="color:#0284c7; font-weight:600;">(Internal Network Node)</td>
+              <td><strong>Local Network (Internal)</strong> <span style="color:#64748b; font-size:11px;">(LAN)</span></td>
+              <td>Internal Subnet</td>
+              <td><code>RFC 1918 Private IP</code></td>
+              <td style="font-size:11px; color:#64748b;">Local Area Network (Private Space)</td>
+            </tr>
+            
+            <tr>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')"><code>192.168.1.50</code></a> <span class='badge' style='background:#f1f5f9; color:#475569; border:1px solid #cbd5e1;'>LAN</span></td>
+              <td style="color:#0284c7; font-weight:600;">(Internal Network Node)</td>
+              <td><strong>Local Network (Internal)</strong> <span style="color:#64748b; font-size:11px;">(LAN)</span></td>
+              <td>Internal Subnet</td>
+              <td><code>RFC 1918 Private IP</code></td>
+              <td style="font-size:11px; color:#64748b;">Local Area Network (Private Space)</td>
+            </tr>
+            
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2><span>📁 Extracted Network File Artifacts (File Carving)</span></h2>
+  <div style="overflow-x: auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Filename</th>
+          <th>Object Type</th>
+          <th>Size</th>
+          <th>Transmission Flow</th>
+          <th>SHA-256 Hash</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+            <tr>
+              <td><code>#1</code></td>
+              <td style="font-weight:700; color:#1e3a8a;">login.php</td>
+              <td><span class="badge" style="background:#f5f3ff; color:#6d28d9; border:1px solid #c4b5fd;">Generic Binary Payload (.bin)</span></td>
+              <td>48 B</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')">192.168.1.50</a> &rarr; <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('198.51.100.23')">198.51.100.23</a></td>
+              <td><code style="font-size:11px;">cea8069ee0431bf5...</code></td>
+              <td><button class="btn-filter-pkts" onclick="filterByPacketList('17')">Inspect Pkts</button></td>
+            </tr>
+            
+            <tr>
+              <td><code>#2</code></td>
+              <td style="font-weight:700; color:#1e3a8a;">c2_script_payload_2.ps1</td>
+              <td><span class="badge" style="background:#f5f3ff; color:#6d28d9; border:1px solid #c4b5fd;">PowerShell Script / C2 Payload</span></td>
+              <td>112 B</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')">192.168.1.50</a> &rarr; <a href="javascript:void(0)" class="ip-link" onclick="openIpModal('198.51.100.23')">198.51.100.23</a></td>
+              <td><code style="font-size:11px;">2abba63796368edb...</code></td>
+              <td><button class="btn-filter-pkts" onclick="filterByPacketList('18')">Inspect Pkts</button></td>
+            </tr>
+            
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>
+    <span>🔍 Live Dissected Packet Stream</span>
+    <span id="pkt-count-badge" style="font-size:12px; color:var(--text-muted); font-weight:normal;">Showing 200 packets</span>
+  </h2>
+  
+  <div class="search-bar-wrap">
+    <input type="text" id="live-search-box" class="search-input" placeholder="🔍 Live Interactive Filter: Type any IP, Protocol (tcp, dns, http), Port, or Search Text..." oninput="onLiveFilterChanged()">
+    <button class="btn-filter-pkts" style="padding:9px 14px;" onclick="resetLiveFilter()">Clear Filter</button>
+  </div>
+
+  <div style="overflow-x: auto; max-height: 520px; overflow-y: auto;">
+    <table id="packet-main-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Time (s)</th>
+          <th>Source IP</th>
+          <th>Destination IP</th>
+          <th>Protocol</th>
+          <th>Length</th>
+          <th>Summary / Dissection Info</th>
+        </tr>
+      </thead>
+      <tbody id="packet-tbody">
+        
+            <tr class='proto-arp pkt-row' data-pkt="1" data-proto="arp" data-src="192.168.1.1" data-dst="192.168.1.50" data-info="arp reply (is-at) 192.168.1.50 tell 192.168.1.1">
+              <td><strong>#1</strong></td>
+              <td style="color:#64748b;">0.000000</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.1')"><code>192.168.1.1</code></a></td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')"><code>192.168.1.50</code></a></td>
+              <td><span class='badge badge-arp'>ARP</span></td>
+              <td>42 B</td>
+              <td class='info-col'>ARP Reply (is-at) 192.168.1.50 tell 192.168.1.1</td>
+            </tr>
+            
+            <tr class='proto-arp pkt-row' data-pkt="2" data-proto="arp" data-src="192.168.1.1" data-dst="192.168.1.50" data-info="arp reply (is-at) 192.168.1.50 tell 192.168.1.1">
+              <td><strong>#2</strong></td>
+              <td style="color:#64748b;">0.150000</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.1')"><code>192.168.1.1</code></a></td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')"><code>192.168.1.50</code></a></td>
+              <td><span class='badge badge-arp'>ARP</span></td>
+              <td>42 B</td>
+              <td class='info-col'>ARP Reply (is-at) 192.168.1.50 tell 192.168.1.1</td>
+            </tr>
+            
+            <tr class='proto-tcp pkt-row' data-pkt="3" data-proto="tcp" data-src="192.168.1.100" data-dst="192.168.1.50" data-info="50000 -> 21 [syn] seq=100000 ack=0 win=65535 len=0">
+              <td><strong>#3</strong></td>
+              <td style="color:#64748b;">0.300000</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.100')"><code>192.168.1.100</code></a></td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')"><code>192.168.1.50</code></a></td>
+              <td><span class='badge badge-tcp'>TCP</span></td>
+              <td>54 B</td>
+              <td class='info-col'>50000 -> 21 [SYN] Seq=100000 Ack=0 Win=65535 Len=0</td>
+            </tr>
+            
+            <tr class='proto-tcp pkt-row' data-pkt="4" data-proto="tcp" data-src="192.168.1.100" data-dst="192.168.1.50" data-info="50001 -> 22 [syn] seq=100001 ack=0 win=65535 len=0">
+              <td><strong>#4</strong></td>
+              <td style="color:#64748b;">0.450000</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.100')"><code>192.168.1.100</code></a></td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')"><code>192.168.1.50</code></a></td>
+              <td><span class='badge badge-tcp'>TCP</span></td>
+              <td>54 B</td>
+              <td class='info-col'>50001 -> 22 [SYN] Seq=100001 Ack=0 Win=65535 Len=0</td>
+            </tr>
+            
+            <tr class='proto-tcp pkt-row' data-pkt="5" data-proto="tcp" data-src="192.168.1.100" data-dst="192.168.1.50" data-info="50002 -> 23 [syn] seq=100002 ack=0 win=65535 len=0">
+              <td><strong>#5</strong></td>
+              <td style="color:#64748b;">0.600000</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.100')"><code>192.168.1.100</code></a></td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')"><code>192.168.1.50</code></a></td>
+              <td><span class='badge badge-tcp'>TCP</span></td>
+              <td>54 B</td>
+              <td class='info-col'>50002 -> 23 [SYN] Seq=100002 Ack=0 Win=65535 Len=0</td>
+            </tr>
+            
+            <tr class='proto-tcp pkt-row' data-pkt="6" data-proto="tcp" data-src="192.168.1.100" data-dst="192.168.1.50" data-info="50003 -> 80 [syn] seq=100003 ack=0 win=65535 len=0">
+              <td><strong>#6</strong></td>
+              <td style="color:#64748b;">0.750000</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.100')"><code>192.168.1.100</code></a></td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')"><code>192.168.1.50</code></a></td>
+              <td><span class='badge badge-tcp'>TCP</span></td>
+              <td>54 B</td>
+              <td class='info-col'>50003 -> 80 [SYN] Seq=100003 Ack=0 Win=65535 Len=0</td>
+            </tr>
+            
+            <tr class='proto-tcp pkt-row' data-pkt="7" data-proto="tcp" data-src="192.168.1.100" data-dst="192.168.1.50" data-info="50004 -> 443 [syn] seq=100004 ack=0 win=65535 len=0">
+              <td><strong>#7</strong></td>
+              <td style="color:#64748b;">1.900000</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.100')"><code>192.168.1.100</code></a></td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')"><code>192.168.1.50</code></a></td>
+              <td><span class='badge badge-tcp'>TCP</span></td>
+              <td>54 B</td>
+              <td class='info-col'>50004 -> 443 [SYN] Seq=100004 Ack=0 Win=65535 Len=0</td>
+            </tr>
+            
+            <tr class='proto-tcp pkt-row' data-pkt="8" data-proto="tcp" data-src="192.168.1.100" data-dst="192.168.1.50" data-info="50005 -> 445 [syn] seq=100005 ack=0 win=65535 len=0">
+              <td><strong>#8</strong></td>
+              <td style="color:#64748b;">1.050000</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.100')"><code>192.168.1.100</code></a></td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')"><code>192.168.1.50</code></a></td>
+              <td><span class='badge badge-tcp'>TCP</span></td>
+              <td>54 B</td>
+              <td class='info-col'>50005 -> 445 [SYN] Seq=100005 Ack=0 Win=65535 Len=0</td>
+            </tr>
+            
+            <tr class='proto-tcp pkt-row' data-pkt="9" data-proto="tcp" data-src="192.168.1.100" data-dst="192.168.1.50" data-info="50006 -> 1433 [syn] seq=100006 ack=0 win=65535 len=0">
+              <td><strong>#9</strong></td>
+              <td style="color:#64748b;">1.200000</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.100')"><code>192.168.1.100</code></a></td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')"><code>192.168.1.50</code></a></td>
+              <td><span class='badge badge-tcp'>TCP</span></td>
+              <td>54 B</td>
+              <td class='info-col'>50006 -> 1433 [SYN] Seq=100006 Ack=0 Win=65535 Len=0</td>
+            </tr>
+            
+            <tr class='proto-tcp pkt-row' data-pkt="10" data-proto="tcp" data-src="192.168.1.100" data-dst="192.168.1.50" data-info="50007 -> 3306 [syn] seq=100007 ack=0 win=65535 len=0">
+              <td><strong>#10</strong></td>
+              <td style="color:#64748b;">1.350000</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.100')"><code>192.168.1.100</code></a></td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')"><code>192.168.1.50</code></a></td>
+              <td><span class='badge badge-tcp'>TCP</span></td>
+              <td>54 B</td>
+              <td class='info-col'>50007 -> 3306 [SYN] Seq=100007 Ack=0 Win=65535 Len=0</td>
+            </tr>
+            
+            <tr class='proto-tcp pkt-row' data-pkt="11" data-proto="tcp" data-src="192.168.1.100" data-dst="192.168.1.50" data-info="50008 -> 3389 [syn] seq=100008 ack=0 win=65535 len=0">
+              <td><strong>#11</strong></td>
+              <td style="color:#64748b;">1.500000</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.100')"><code>192.168.1.100</code></a></td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')"><code>192.168.1.50</code></a></td>
+              <td><span class='badge badge-tcp'>TCP</span></td>
+              <td>54 B</td>
+              <td class='info-col'>50008 -> 3389 [SYN] Seq=100008 Ack=0 Win=65535 Len=0</td>
+            </tr>
+            
+            <tr class='proto-tcp pkt-row' data-pkt="12" data-proto="tcp" data-src="192.168.1.100" data-dst="192.168.1.50" data-info="50009 -> 8080 [syn] seq=100009 ack=0 win=65535 len=0">
+              <td><strong>#12</strong></td>
+              <td style="color:#64748b;">1.650000</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.100')"><code>192.168.1.100</code></a></td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')"><code>192.168.1.50</code></a></td>
+              <td><span class='badge badge-tcp'>TCP</span></td>
+              <td>54 B</td>
+              <td class='info-col'>50009 -> 8080 [SYN] Seq=100009 Ack=0 Win=65535 Len=0</td>
+            </tr>
+            
+            <tr class='proto-dns pkt-row' data-pkt="13" data-proto="dns" data-src="192.168.1.100" data-dst="8.8.8.8" data-info="standard query: dghpcybpcybhbiblegzpbhryyxrlzcbwyxnzd29yza.exfil.covert-tunnel.org (a)">
+              <td><strong>#13</strong></td>
+              <td style="color:#64748b;">2.800000</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.100')"><code>192.168.1.100</code></a></td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('8.8.8.8')"><code>8.8.8.8</code></a></td>
+              <td><span class='badge badge-dns'>DNS</span></td>
+              <td>126 B</td>
+              <td class='info-col'>Standard Query: dGhpcyBpcyBhbiBleGZpbHRyYXRlZCBwYXNzd29yZA.exfil.covert-tunnel.org (A)</td>
+            </tr>
+            
+            <tr class='proto-dns pkt-row' data-pkt="14" data-proto="dns" data-src="192.168.1.100" data-dst="8.8.8.8" data-info="standard query: ywrtaw46u3vwzxjtzwnyzxrlzxkymdi2.exfil.covert-tunnel.org (a)">
+              <td><strong>#14</strong></td>
+              <td style="color:#64748b;">2.950000</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.100')"><code>192.168.1.100</code></a></td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('8.8.8.8')"><code>8.8.8.8</code></a></td>
+              <td><span class='badge badge-dns'>DNS</span></td>
+              <td>116 B</td>
+              <td class='info-col'>Standard Query: YWRtaW46U3VwZXJTZWNyZXRLZXkyMDI2.exfil.covert-tunnel.org (A)</td>
+            </tr>
+            
+            <tr class='proto-dns pkt-row' data-pkt="15" data-proto="dns" data-src="192.168.1.100" data-dst="8.8.8.8" data-info="standard query: c2vjcmv0x2zpbmfuy2lhbf9yzxbvcnrfcgrm.exfil.covert-tunnel.org (a)">
+              <td><strong>#15</strong></td>
+              <td style="color:#64748b;">2.100000</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.100')"><code>192.168.1.100</code></a></td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('8.8.8.8')"><code>8.8.8.8</code></a></td>
+              <td><span class='badge badge-dns'>DNS</span></td>
+              <td>120 B</td>
+              <td class='info-col'>Standard Query: c2VjcmV0X2ZpbmFuY2lhbF9yZXBvcnRfcGRm.exfil.covert-tunnel.org (A)</td>
+            </tr>
+            
+            <tr class='proto-http pkt-row' data-pkt="16" data-proto="http" data-src="192.168.1.50" data-dst="198.51.100.23" data-info="get /admin/dashboard http/1.1">
+              <td><strong>#16</strong></td>
+              <td style="color:#64748b;">2.250000</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')"><code>192.168.1.50</code></a></td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('198.51.100.23')"><code>198.51.100.23</code></a></td>
+              <td><span class='badge badge-http'>HTTP</span></td>
+              <td>203 B</td>
+              <td class='info-col'>GET /admin/dashboard HTTP/1.1</td>
+            </tr>
+            
+            <tr class='proto-http pkt-row' data-pkt="17" data-proto="http" data-src="192.168.1.50" data-dst="198.51.100.23" data-info="post /login.php http/1.1">
+              <td><strong>#17</strong></td>
+              <td style="color:#64748b;">2.400000</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')"><code>192.168.1.50</code></a></td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('198.51.100.23')"><code>198.51.100.23</code></a></td>
+              <td><span class='badge badge-http'>HTTP</span></td>
+              <td>227 B</td>
+              <td class='info-col'>POST /login.php HTTP/1.1</td>
+            </tr>
+            
+            <tr class='proto-tcp pkt-row' data-pkt="18" data-proto="tcp" data-src="192.168.1.50" data-dst="198.51.100.23" data-info="49154 -> 4444 [ack, psh] seq=3000001 ack=7000001 win=65535 len=112">
+              <td><strong>#18</strong></td>
+              <td style="color:#64748b;">2.550000</td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('192.168.1.50')"><code>192.168.1.50</code></a></td>
+              <td><a href="javascript:void(0)" class="ip-link" onclick="openIpModal('198.51.100.23')"><code>198.51.100.23</code></a></td>
+              <td><span class='badge badge-tcp'>TCP</span></td>
+              <td>166 B</td>
+              <td class='info-col'>49154 -> 4444 [ACK, PSH] Seq=3000001 Ack=7000001 Win=65535 Len=112</td>
+            </tr>
+            
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Dynamic Interactive IP Investigation Modal Dialog -->
+<div id="ipModal" class="modal-overlay" onclick="closeModalOnOutsideClick(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title" id="m-ip-title">🌐 IP Forensic Telemetry</div>
+      <button class="btn-close" onclick="closeIpModal()">&times;</button>
+    </div>
+    <div id="m-ip-body" style="font-size:13px; line-height:1.6;">
+      <!-- Populated dynamically via JS -->
+    </div>
+    <div style="margin-top:18px; text-align:right;">
+      <button id="m-btn-filter-ip" class="btn-filter-pkts" style="padding:8px 16px; font-size:12px;" onclick="filterTableByCurrentModalIp()">🎯 Filter Packet Stream for this IP</button>
+    </div>
+  </div>
+</div>
+
+<!-- Embedded JS Engine for Client-Side Interactivity -->
+<script>
+  const IP_STORE = {"192.168.1.1": {"profile": {"IP": "192.168.1.1", "Total_Packets": 2, "Packets_Sent": 2, "Packets_Recv": 0, "Total_Bytes": 84, "Bytes_Sent": 84, "Bytes_Recv": 0, "Protocols": {"ARP": 2}, "Ports_Count": 0, "Peers_Count": 1, "Threat_Score": 80, "Threat_Level": "MALICIOUS", "Associated_Alerts": ["[CRITICAL] DNS Tunneling / Data Exfiltration Detected", "[HIGH] TCP SYN Port Scan Activity"]}, "geo": {"IP": "192.168.1.1", "Is_Private": true, "Domain_Names": ["(Internal Network Node)"], "Reverse_DNS": "192.168.1.1.internal.local", "Country": "Local Network (Internal)", "Country_Code": "LAN", "City": "Internal Subnet", "ISP": "Local Area Network (Private Space)", "ASN": "RFC 1918 Private IP", "Coordinates": "N/A", "Location_Summary": "LAN / Local Subnet (192.168.0.0/16)"}, "vt": {"Target": "192.168.1.1", "Type": "IPv4 Address", "Source": "Threat Intel Engine (Baseline)", "Verdict": "CLEAN / UNRATED", "Detections": "0/89 Clean Public Node", "Malicious_Count": 0, "Suspicious_Count": 0, "Harmless_Count": 89, "Reputation_Score": 0, "Country": "Global Internet", "ASN": "Standard Routing", "Owner": "Standard Public Host", "Category": "Public Traffic", "Engine_Detections": []}}, "192.168.1.50": {"profile": {"IP": "192.168.1.50", "Total_Packets": 15, "Packets_Sent": 3, "Packets_Recv": 12, "Total_Bytes": 1220, "Bytes_Sent": 596, "Bytes_Recv": 624, "Protocols": {"ARP": 2, "TCP": 11, "HTTP": 2}, "Ports_Count": 13, "Peers_Count": 3, "Threat_Score": 45, "Threat_Level": "MALICIOUS", "Associated_Alerts": ["[HIGH] Cleartext Credential Leak & Exfiltration", "[MEDIUM] Suspicious Backdoor / C2 Port Activity"]}, "geo": {"IP": "192.168.1.50", "Is_Private": true, "Domain_Names": ["(Internal Network Node)"], "Reverse_DNS": "192.168.1.50.internal.local", "Country": "Local Network (Internal)", "Country_Code": "LAN", "City": "Internal Subnet", "ISP": "Local Area Network (Private Space)", "ASN": "RFC 1918 Private IP", "Coordinates": "N/A", "Location_Summary": "LAN / Local Subnet (192.168.0.0/16)"}, "vt": {"Target": "192.168.1.50", "Type": "IPv4 Address", "Source": "Threat Intel Engine (Baseline)", "Verdict": "CLEAN / UNRATED", "Detections": "0/89 Clean Public Node", "Malicious_Count": 0, "Suspicious_Count": 0, "Harmless_Count": 89, "Reputation_Score": 0, "Country": "Global Internet", "ASN": "Standard Routing", "Owner": "Standard Public Host", "Category": "Public Traffic", "Engine_Detections": []}}, "192.168.1.100": {"profile": {"IP": "192.168.1.100", "Total_Packets": 13, "Packets_Sent": 13, "Packets_Recv": 0, "Total_Bytes": 902, "Bytes_Sent": 902, "Bytes_Recv": 0, "Protocols": {"TCP": 10, "DNS": 3}, "Ports_Count": 13, "Peers_Count": 2, "Threat_Score": 80, "Threat_Level": "MALICIOUS", "Associated_Alerts": ["[CRITICAL] DNS Tunneling / Data Exfiltration Detected", "[HIGH] TCP SYN Port Scan Activity"]}, "geo": {"IP": "192.168.1.100", "Is_Private": true, "Domain_Names": ["(Internal Network Node)"], "Reverse_DNS": "192.168.1.100.internal.local", "Country": "Local Network (Internal)", "Country_Code": "LAN", "City": "Internal Subnet", "ISP": "Local Area Network (Private Space)", "ASN": "RFC 1918 Private IP", "Coordinates": "N/A", "Location_Summary": "LAN / Local Subnet (192.168.0.0/16)"}, "vt": {"Target": "192.168.1.100", "Type": "IPv4 Address", "Source": "Threat Intel Engine (Baseline)", "Verdict": "CLEAN / UNRATED", "Detections": "0/89 Clean Public Node", "Malicious_Count": 0, "Suspicious_Count": 0, "Harmless_Count": 89, "Reputation_Score": 0, "Country": "Global Internet", "ASN": "Standard Routing", "Owner": "Standard Public Host", "Category": "Public Traffic", "Engine_Detections": []}}, "8.8.8.8": {"profile": {"IP": "8.8.8.8", "Total_Packets": 3, "Packets_Sent": 0, "Packets_Recv": 3, "Total_Bytes": 362, "Bytes_Sent": 0, "Bytes_Recv": 362, "Protocols": {"DNS": 3}, "Ports_Count": 1, "Peers_Count": 1, "Threat_Score": 0, "Threat_Level": "CLEAN", "Associated_Alerts": []}, "geo": {"IP": "8.8.8.8", "Is_Private": false, "Domain_Names": ["YWRtaW46U3VwZXJTZWNyZXRLZXkyMDI2.exfil.covert-tunnel.org", "c2VjcmV0X2ZpbmFuY2lhbF9yZXBvcnRfcGRm.exfil.covert-tunnel.org", "dGhpcyBpcyBhbiBleGZpbHRyYXRlZCBwYXNzd29yZA.exfil.covert-tunnel.org"], "Reverse_DNS": "node-8-8-8-8.us", "Country": "United States", "Country_Code": "US", "City": "Mountain View, California", "ISP": "Google LLC", "ASN": "AS15169 Google LLC", "Coordinates": "37.4056, -122.0775", "Location_Summary": "Mountain View, California, United States (AS15169 Google LLC)"}, "vt": {"Target": "8.8.8.8", "Type": "IPv4 Address", "Verdict": "CLEAN", "Detections": "0/89 Clean Public DNS", "Malicious_Count": 0, "Suspicious_Count": 0, "Harmless_Count": 89, "Reputation_Score": 100, "Country": "United States (US)", "ASN": "AS15169 (Google LLC)", "Owner": "Google Public DNS", "Category": "Public Anycast DNS Resolver", "Engine_Detections": [], "Source": "Threat Intel Knowledge Base"}}, "198.51.100.23": {"profile": {"IP": "198.51.100.23", "Total_Packets": 3, "Packets_Sent": 0, "Packets_Recv": 3, "Total_Bytes": 596, "Bytes_Sent": 0, "Bytes_Recv": 596, "Protocols": {"HTTP": 2, "TCP": 1}, "Ports_Count": 2, "Peers_Count": 1, "Threat_Score": 0, "Threat_Level": "CLEAN", "Associated_Alerts": []}, "geo": {"IP": "198.51.100.23", "Is_Private": false, "Domain_Names": ["internal-portal.corp"], "Reverse_DNS": "node-198-51-100-23.us", "Country": "United States", "Country_Code": "US", "City": "Chicago, Illinois", "ISP": "Bulletproof Hosting Infrastructure", "ASN": "AS64496 TEST-NET-2", "Coordinates": "41.8781, -87.6298", "Location_Summary": "Chicago, Illinois, United States (AS64496 TEST-NET-2)"}, "vt": {"Target": "198.51.100.23", "Type": "IPv4 Address", "Verdict": "MALICIOUS", "Detections": "32/89 Security Vendors Flagged as Malicious", "Malicious_Count": 32, "Suspicious_Count": 4, "Harmless_Count": 53, "Reputation_Score": -85, "Country": "United States (US)", "ASN": "AS64496 (TEST-NET-2 Autonomous System)", "Owner": "Malicious Infrastructure / Bulletproof Hosting", "Category": "CobaltStrike C2 / Backdoor Server", "Engine_Detections": [{"Engine": "Kaspersky", "Category": "Malicious", "Result": "Trojan.CobaltStrike.C2"}, {"Engine": "Sophos", "Category": "Malicious", "Result": "C2/Generic-A"}, {"Engine": "CrowdStrike Falcon", "Category": "Malicious", "Result": "Adversary Infrastructure"}, {"Engine": "Fortinet", "Category": "Malicious", "Result": "Malicious Host"}, {"Engine": "Microsoft Defender", "Category": "Malicious", "Result": "Backdoor:Win32/CobaltStrike"}], "Source": "Threat Intel Knowledge Base"}}};
+  let currentModalIp = "";
+
+  function openIpModal(ip) {
+    currentModalIp = ip;
+    const modal = document.getElementById("ipModal");
+    const title = document.getElementById("m-ip-title");
+    const body = document.getElementById("m-ip-body");
+
+    const data = IP_STORE[ip] || {};
+    const prof = data.profile || {};
+    const geo = data.geo || {};
+    const vt = data.vt || {};
+
+    title.innerHTML = `🌐 Deep Forensic Investigation: <code>${ip}</code>`;
+
+    let vtEnginesHtml = "";
+    if (vt.Engine_Detections && vt.Engine_Detections.length > 0) {
+      vtEnginesHtml = `<div style="margin-top:10px; background:#fef2f2; border:1.5px solid #f87171; border-radius:8px; padding:12px;">
+        <strong style="color:#b91c1c;">🚨 Security Engines Flagging this Target:</strong>
+        <ul style="margin:6px 0 0 16px; color:#7f1d1d;">
+          ${vt.Engine_Detections.map(e => `<li><strong>${e.Engine}</strong>: ${e.Category} (${e.Result})</li>`).join('')}
+        </ul>
+      </div>`;
+    }
+
+    body.innerHTML = `
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-bottom:14px;">
+        <div style="background:#f8fafc; border:1.5px solid var(--border-blue); padding:14px; border-radius:8px;">
+          <div style="color:var(--text-navy); font-size:11px; font-weight:700; text-transform:uppercase;">Threat Classification</div>
+          <div style="font-size:16px; font-weight:800; margin-top:2px; color:${prof.Threat_Level === 'MALICIOUS' ? '#dc2626' : (prof.Threat_Level === 'SUSPICIOUS' ? '#ea580c' : '#16a34a')}">
+            ${prof.Threat_Level || 'CLEAN / UNRATED'} (Score: ${prof.Threat_Score || 0}/100)
+          </div>
+          <div style="margin-top:4px; font-size:12px; color:#475569;">Packets Tx: ${prof.Packets_Sent || 0} | Rx: ${prof.Packets_Recv || 0}</div>
+        </div>
+        <div style="background:#f8fafc; border:1.5px solid var(--border-blue); padding:14px; border-radius:8px;">
+          <div style="color:var(--text-navy); font-size:11px; font-weight:700; text-transform:uppercase;">VirusTotal Verdict</div>
+          <div style="font-size:16px; font-weight:800; margin-top:2px; color:${vt.Verdict && vt.Verdict.includes('MALICIOUS') ? '#dc2626' : '#16a34a'}">
+            ${vt.Verdict || 'CLEAN'}
+          </div>
+          <div style="margin-top:4px; font-size:12px; color:#475569;">Detections: ${vt.Detections || '0/89'}</div>
+        </div>
+      </div>
+
+      <div style="background:#f8fafc; border:1.5px solid var(--border-blue); padding:16px; border-radius:8px; margin-bottom:12px;">
+        <h4 style="color:var(--text-navy); margin-bottom:8px; font-weight:800;">🗺️ Geolocation & Routing Intelligence</h4>
+        <div style="color:#0f172a; margin-bottom:3px;"><strong>Country:</strong> ${geo.Country || 'Global Internet'} (${geo.Country_Code || 'N/A'})</div>
+        <div style="color:#0f172a; margin-bottom:3px;"><strong>City / Region:</strong> ${geo.City || 'N/A'}</div>
+        <div style="color:#0f172a; margin-bottom:3px;"><strong>ASN & Route:</strong> <code>${geo.ASN || vt.ASN || 'Standard Route'}</code></div>
+        <div style="color:#0f172a; margin-bottom:3px;"><strong>ISP / Organization:</strong> ${geo.ISP || vt.Owner || 'N/A'}</div>
+        <div style="color:#0f172a;"><strong>Correlated Domains:</strong> ${geo.Domain_Names ? geo.Domain_Names.join(', ') : 'None'}</div>
+      </div>
+
+      ${vtEnginesHtml}
+    `;
+
+    modal.style.display = "flex";
+  }
+
+  function closeIpModal() {
+    document.getElementById("ipModal").style.display = "none";
+  }
+
+  function closeModalOnOutsideClick(e) {
+    if (e.target.id === "ipModal") closeIpModal();
+  }
+
+  function filterTableByCurrentModalIp() {
+    if (!currentModalIp) return;
+    document.getElementById("live-search-box").value = currentModalIp;
+    onLiveFilterChanged();
+    closeIpModal();
+    document.getElementById("packet-main-table").scrollIntoView({ behavior: "smooth" });
+  }
+
+  function filterByPacketList(pktsCsv) {
+    const pktSet = new Set(pktsCsv.split(",").map(s => s.trim()));
+    const rows = document.querySelectorAll(".pkt-row");
+    let count = 0;
+
+    rows.forEach(r => {
+      const num = r.getAttribute("data-pkt");
+      if (pktSet.has(num)) {
+        r.style.display = "";
+        count++;
+      } else {
+        r.style.display = "none";
+      }
+    });
+
+    document.getElementById("live-search-box").value = "Packets: " + pktsCsv.split(",").slice(0, 5).join(", ") + "...";
+    document.getElementById("pkt-count-badge").innerText = `Filtered: ${count} matching trigger packets`;
+    document.getElementById("packet-main-table").scrollIntoView({ behavior: "smooth" });
+  }
+
+  function onLiveFilterChanged() {
+    const query = document.getElementById("live-search-box").value.trim().toLowerCase();
+    const rows = document.querySelectorAll(".pkt-row");
+    let count = 0;
+
+    rows.forEach(r => {
+      if (!query) {
+        r.style.display = "";
+        count++;
+        return;
+      }
+      const num = r.getAttribute("data-pkt") || "";
+      const proto = r.getAttribute("data-proto") || "";
+      const src = (r.getAttribute("data-src") || "").toLowerCase();
+      const dst = (r.getAttribute("data-dst") || "").toLowerCase();
+      const info = (r.getAttribute("data-info") || "").toLowerCase();
+
+      if (num === query || proto.includes(query) || src.includes(query) || dst.includes(query) || info.includes(query)) {
+        r.style.display = "";
+        count++;
+      } else {
+        r.style.display = "none";
+      }
+    });
+
+    document.getElementById("pkt-count-badge").innerText = `Showing ${count} of ${rows.length} packets`;
+  }
+
+  function resetLiveFilter() {
+    document.getElementById("live-search-box").value = "";
+    onLiveFilterChanged();
+  }
+</script>
+</body>
+</html>

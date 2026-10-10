@@ -1,0 +1,84 @@
+[
+  {
+    "case_id": "CASE-20260908-FF9514",
+    "title": "Investigation Case Zeta",
+    "status": "OPEN",
+    "severity": "HIGH",
+    "created_date": "08/09/2026",
+    "investigator": "Forensic Lead",
+    "lead_pcap": "hussein.al-wajih.pcap"
+  },
+  {
+    "case_id": "CASE-20260904-59B95C",
+    "title": "Investigation Case Gamma - Multi-Stage External Breach",
+    "status": "OPEN",
+    "severity": "CRITICAL",
+    "created_date": "2026-09-04 14:20:00",
+    "investigator": "Lead DFIR Analyst",
+    "lead_pcap": "ddos_multi_source_udp_burst.pcap",
+    "notes": "Correlated high-volume SYN flood combined with port sweep against internal DMZ segment.",
+    "audit_log": [
+      {
+        "timestamp": "2026-09-04 14:20:00",
+        "action": "Case Created",
+        "user": "Admin"
+      },
+      {
+        "timestamp": "2026-09-04 14:22:15",
+        "action": "PCAP Attached & SHA-256 Verified",
+        "user": "DFIR-Agent"
+      }
+    ]
+  },
+  {
+    "case_id": "CASE-20260904-8C399A",
+    "title": "Investigation Case Alpha - Reconnaissance & Port Scanning",
+    "status": "OPEN",
+    "severity": "HIGH",
+    "created_date": "2026-09-04 11:05:00",
+    "investigator": "Threat Hunting Specialist",
+    "lead_pcap": "nmap_standard_scan.pcap",
+    "notes": "Aggressive TCP SYN & service fingerprinting sweeping hosts across subnet 192.168.1.0/24.",
+    "audit_log": [
+      {
+        "timestamp": "2026-09-04 11:05:00",
+        "action": "Case Created",
+        "user": "Admin"
+      }
+    ]
+  },
+  {
+    "case_id": "CASE-20260904-FC726B",
+    "title": "Investigation Case Beta - Covert DNS Tunneling & Shell",
+    "status": "INVESTIGATING",
+    "severity": "CRITICAL",
+    "created_date": "2026-09-04 09:30:00",
+    "investigator": "Senior SOC Analyst",
+    "lead_pcap": "dns-remoteshell.pcap",
+    "notes": "High-frequency anomalous DNS queries with base64 encoded TXT payloads indicative of remote shell session.",
+    "audit_log": [
+      {
+        "timestamp": "2026-09-04 09:30:00",
+        "action": "Case Created",
+        "user": "Admin"
+      }
+    ]
+  },
+  {
+    "case_id": "CASE-20260904-958CCE",
+    "title": "Investigation Case Delta - Layer-2 Anomaly & Teardrop",
+    "status": "CONTAINED",
+    "severity": "MEDIUM",
+    "created_date": "2026-09-03 18:15:00",
+    "investigator": "Network Forensics Analyst",
+    "lead_pcap": "teardrop.cap",
+    "notes": "Fragmented packet offset collision causing kernel panic simulation.",
+    "audit_log": [
+      {
+        "timestamp": "2026-09-03 18:15:00",
+        "action": "Case Created",
+        "user": "Admin"
+      }
+    ]
+  }
+]

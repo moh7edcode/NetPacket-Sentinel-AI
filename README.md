@@ -22,17 +22,17 @@
 ## 🎯 قمرة القيادة التكتيكية (Primary Tactical SOC Deck Overview)
 
 <div align="center">
-  <img src="Screenshots/hero_tactical_soc_deck.png" alt="NetPacket Sentinel AI - Tactical Cyber SOC Deck" width="100%">
-  <p><em>الشكل 1: قمرة القيادة التكتيكية لنظام NetPacket-Sentinel-AI — عرض حالة DEFCON الفورية، فاحص الحزم الثلاثي بمستوى Wireshark، ومؤشرات التحليل الجنائي اللحظي.</em></p>
+  <img src="Screenshots/01_hero_soc_deck.png" alt="NetPacket Sentinel AI - Tactical Cyber SOC Deck" width="100%">
+  <p><em>الشكل 1: قمرة القيادة التكتيكية لنظام NetPacket-Sentinel-AI — حالة التأهب DEFCON 1، فاحص الحزم الثلاثي بمستوى Wireshark، ومؤشرات التحليل الجنائي والذكاء الاصطناعي اللحظية.</em></p>
 </div>
 
 ---
 
 ## 📖 1. ما هو NetPacket-Sentinel-AI؟ (System Overview)
 
-**NetPacket-Sentinel-AI** هو نظام متكامل للأمن السيبراني والتحقيق الجنائي الرقمي (**Digital Forensics & Incident Response - DFIR**) يعمل كتطبيق سطح مكتب تكتيكي مستقل عالي الكفاءة.
+**NetPacket-Sentinel-AI** هو نظام متكامل للأمن السيبراني والتحقيق الجنائي الرقمي (**Digital Forensics & Incident Response - DFIR**) يعمل كتطبيق سطح مكتب تكتيكي عالي الكفاءة.
 
-صُمم النظام ليعمل كـ **قمرة قيادة متطورة لغرف العمليات الأمنية (Tactical SOC Deck)**؛ حيث يقوم بفك وتفكيك حركة مرور الشبكة المعقدة (**PCAP / PCAPNG**) بدقة الميكروثانية، ويدمج هذا التحليل مباشرة مع **محرك ذكاء اصطناعي هجين (Hybrid ML Engine)** لكشف الشذوذ وهجمات اليوم الصفر (**Zero-Day Attacks**)، وربط التهديدات بمعيار **MITRE ATT&CK Enterprise v16** عالمياً، مع الإجابة الآلية الذكية عن **الأسئلة الجنائية الأربعة (Forensic 4Q Grounding)** وتوليد أوامر وقواعد الحظر الفوري بنقرة زر واحدة.
+صُمم النظام ليعمل كـ **قمرة قيادة لغرف العمليات الأمنية (Tactical SOC Deck)**؛ حيث يقوم بفك وتفكيك حركة مرور الشبكة المعقدة (**PCAP / PCAPNG**) بدقة الميكروثانية، ويدمج هذا التحليل مباشرة مع **محرك ذكاء اصطناعي هجين (Hybrid ML Engine)** لكشف الشذوذ وهجمات اليوم الصفر (**Zero-Day Attacks**)، وربط التهديدات بمعيار **MITRE ATT&CK Enterprise v16** عالمياً، مع الإجابة الآلية الذكية عن **الأسئلة الجنائية الأربعة (Forensic 4Q Grounding)** وتوليد أوامر وقواعد الحظر الفوري بنقرة زر واحدة.
 
 يعتمد النظام على واجهة زجاجية حديثة (**Cyber Glassmorphism Theme**) مبنية بتقنيات الويب الأصلية وفائقة السرعة، وتعمل عبر نافذة سطح مكتب مستقلة عبر محرك `pywebview` دون استهلاك موارد الذاكرة أو الحاجة لمتصفح خارجي.
 
@@ -149,114 +149,116 @@
 
 ---
 
-## 📸 4. معرض قمرة القيادة والواجهات التكتيكية (Full Screenshot Gallery)
+## 📸 4. معرض قمرة القيادة والواجهات التكتيكية (Verified Screenshot Gallery)
 
-يحتوي المشروع على **30 لقطة شاشة توثيقية عالية الدقة** تغطي كافة الأجنحة والأدوات الميدانية:
+تم تنظيم المعرض بشكل احترافي ومنهجي يضم **29 لقطة شاشة فريدة بنسبة 100% دون أي تكرار**، ومقسمة وفق الأجنحة التشغيلية لقمرة القيادة:
 
-### أولاً: قمرة القيادة التكتيكية والواجهة الرئيسية (Tactical Command & Overview)
+### أولاً: قمرة القيادة التكتيكية والواجهة الشاملة (Tactical SOC Deck & Panoramas)
 
-| قمرة القيادة التكتيكية الرئيسية (Tactical SOC Deck) | العرض الشامل للواجهة الزجاجية الداكنة (Dark Glassmorphism) |
+| 01. قمرة القيادة التكتيكية الرئيسية (Hero SOC Deck) | 27. البانوراما الزجاجية للوضع الداكن (Dark Glassmorphism) |
 |:---:|:---:|
-| <img src="Screenshots/hero_tactical_soc_deck.png" width="100%"> | <img src="Screenshots/Screenshot%202026-10-10%20234514.png" width="100%"> |
-| *الشكل 1: قمرة القيادة الشاملة مع مؤشرات DEFCON وعدادات الهجمات* | *الشكل 2: الوضع الليلي التكتيكي المتكامل مع البطاقات الزجاجية الحديثة* |
+| <img src="Screenshots/01_hero_soc_deck.png" width="100%"> | <img src="Screenshots/27_dark_glassmorphism_panorama.png" width="100%"> |
+| *الشكل 1: قمرة القيادة المتكاملة مع مؤشرات DEFCON 1 ورادار حركة المرور الحية* | *الشكل 2: الواجهة التكتيكية الزجاجية بالوضع الليلي الكامل* |
 
-| نافذة سطح المكتب الأصلية عالية الأداء (pywebview) | شريط التصفية التكتيكي المتقدم (Malicious Scope) |
+| 22. بيئة سطح المكتب الأصلية (pywebview Runtime) | 26. شريط التصفية التكتيكي (Malicious Scope Filter) |
 |:---:|:---:|
-| <img src="Screenshots/Screenshot%202026-10-10%20234319.png" width="100%"> | <img src="Screenshots/Screenshot%202026-10-10%20234402.png" width="100%"> |
-| *الشكل 3: التطبيق يعمل كتطبيق سطح مكتب مدمج دون متصفح خارجي* | *الشكل 4: تصفية حركة المرور لعزل الحزم الخبيثة بنقرة واحدة* |
+| <img src="Screenshots/22_pywebview_desktop_runtime.png" width="100%"> | <img src="Screenshots/26_malicious_traffic_filter.png" width="100%"> |
+| *الشكل 3: التطبيق يعمل كنافذة سطح مكتب مدمجة وسريعة دون استهلاك الذاكرة* | *الشكل 4: عزل وتصفية حركة المرور الخبيثة بنقرة واحدة* |
 
 ---
 
-### ثانياً: محرك الذكاء الاصطناعي والاستدلال الجنائي 4Q (AI Sentinel & Forensic 4Q)
+### ثانياً: فاحص الحزم وتفكيك البروتوكولات (Deep Packet Dissection & Streams)
 
-| قمرة الذكاء الاصطناعي للأسئلة الأربعة (AI 4Q Cockpit) | بطاقات سرد سيناريو الحادثة التكتيكية (Incident Story) |
+| 02. فاحص الحزم الثلاثي (Wireshark 3-Pane Dissector) | 28. إعادة تجميع جلسات TCP ثنائية الاتجاه (Stream Follower) |
 |:---:|:---:|
-| <img src="Screenshots/dash_test_ai_cockpit.png" width="100%"> | <img src="Screenshots/Screenshot%202026-10-10%20234231.png" width="100%"> |
-| *الشكل 5: الإجابة الآلية عن الأسئلة الجنائية الأربعة (What, Who, When, Ongoing)* | *الشكل 6: بطاقات النيون التفاعلية مع تفاصيل مسار الحادثة* |
+| <img src="Screenshots/02_wireshark_packet_dissector.png" width="100%"> | <img src="Screenshots/28_tcp_stream_reassembly.png" width="100%"> |
+| *الشكل 5: قائمة الحزم، شجرة البروتوكولات، و Hex Dump مع إنتروبيا البايتات* | *الشكل 6: تتبع محادثة الجلسة بتلوين تفاعلي لحركة العميل والخادم* |
 
-| تفصيل مراحل سلسلة القتل السيبراني (Kill Chain Evolution) | التوصيات الأمنية وخطة العزل الفوري (Mitigation Advice) |
+| 25. فحص الحمولات الخام (Raw Payload Inspection) | 05. فك تشفير الحمولات المشوشة (Payload Decoder) |
 |:---:|:---:|
-| <img src="Screenshots/Screenshot%202026-10-10%20234242.png" width="100%"> | <img src="Screenshots/Screenshot%202026-10-10%20234251.png" width="100%"> |
-| *الشكل 7: تتبع زمني دقيق لتصاعد الهجوم عبر مراحل Cyber Kill Chain* | *الشكل 8: توصيات المحرك الذكي للاحتواء الفوري وتقليل الأضرار* |
+| <img src="Screenshots/25_raw_payload_inspection.png" width="100%"> | <img src="Screenshots/05_payload_decoder_artifacts.png" width="100%"> |
+| *الشكل 7: كشف حمولات الويب الخام واستخراج طلبات login.php المشبوهة* | *الشكل 8: فك تعمية النصوص المشفرة بالـ Base64 و Hex و Gzip و XOR* |
 
 ---
 
-### ثالثاً: فحص الحزم العميق وتتبع الجلسات (Deep Packet Inspection & Streams)
+### ثالثاً: نحت الملفات والأدلة الجنائية (File Carving & DFIR Hub)
 
-| فاحص الحزم الثلاثي بمستوى Wireshark (3-Pane Dissector) | إعادة تركيب تدفقات جلسات TCP و HTTP ثنائية الاتجاه |
+| 07. نحت الملفات المضمنة (File Carving Engine) | 21. منصة وخزنة الأدلة الجنائية (DFIR Evidence Hub) |
 |:---:|:---:|
-| <img src="Screenshots/Screenshot%202026-10-10%20233958.png" width="100%"> | <img src="Screenshots/Screenshot%202026-10-10%20234631.png" width="100%"> |
-| *الشكل 9: تشريح الحزم مع تفاصيل الترويسات و Hex Dump وإنتروبيا البايتات* | *الشكل 10: استعراض المحادثات الثنائية بتلوين واضح للعميل والخادم* |
+| <img src="Screenshots/07_file_carver_extracted_streams.png" width="100%"> | <img src="Screenshots/21_sentinel_dfir_evidence_hub.png" width="100%"> |
+| *الشكل 9: استخراج الملفات المضمنة عبر المنافذ وتوليد بصمات التجزئة التشفيرية* | *الشكل 10: إدارة الأدلة الجنائية وتصدير الملفات المحفوظة على القرص* |
 
-| فحص حمولات الويب الخام (Web POST Payload Inspection) | محرك فك تشفير الحمولات المشوشة (Payload Decoder) |
+| 12. الخط الزمني للحوادث (DFIR Case Timeline) | 10. درج قابلية تفسير التدفقات (Explainability Drawer) |
 |:---:|:---:|
-| <img src="Screenshots/Screenshot%202026-10-10%20234348.png" width="100%"> | <img src="Screenshots/Screenshot%202026-10-10%20234028.png" width="100%"> |
-| *الشكل 11: كشف محاولات استغلال نماذج تسجيل الدخول وحمولات POST* | *الشكل 12: فك تشفير النصوص المعماة (Base64 / Hex / Gzip / XOR)* |
+| <img src="Screenshots/12_dfir_case_timeline.png" width="100%"> | <img src="Screenshots/10_flow_explainability_drawer.png" width="100%"> |
+| *الشكل 11: التتبع الزمني المتسلسل للأحداث الأمنية المترابطة* | *الشكل 12: تفصيل الأوزان الإحصائية وعوامل اتخاذ القرار للذكاء الاصطناعي* |
 
 ---
 
-### رابعاً: نحت الملفات والأدلة الرقمية (File Carving & Digital Artifacts)
+### رابعاً: استخبارات التهديدات ومصفوفة مايتر (Threat Intel & MITRE ATT&CK)
 
-| استخراج ونحت الملفات المضمنة (File Carving Engine) | خزنة الأدلة الجنائية الموحدة (Unified DFIR Hub) |
+| 03. مصفوفة MITRE ATT&CK v16 وسمعة VirusTotal | 23. طابور فرز التهديدات الحرجة (High-Priority Queue) |
 |:---:|:---:|
-| <img src="Screenshots/Screenshot%202026-10-10%20234044.png" width="100%"> | <img src="Screenshots/dash_test_dfir_hub.png" width="100%"> |
-| *الشكل 13: استخراج الملفات المضمنة في الحزم وحساب بصمات SHA-256 و MD5* | *الشكل 14: منصة إدارة الحالات الجنائية وتصدير الأدلة على القرص* |
+| <img src="Screenshots/03_mitre_threat_matrix.png" width="100%"> | <img src="Screenshots/23_high_priority_triage_queue.png" width="100%"> |
+| *الشكل 13: تظليل تقنيات الهجوم المتوهجة وعداد السرعة لسمعة الـ IP* | *الشكل 14: قائمة فرز الحوادث الأمنية الأكثر خطورة للمحللين* |
 
-| الخط الزمني للحوادث الجنائية (DFIR Incident Timeline) | درج قابلية تفسير التدفقات والقرارات (Explainability Drawer) |
+| 24. شريط التنبيهات الأمنية الحية (Live Alerts Banner) | 11. موسوعة هجمات الشبكة (Network Attacks Catalog) |
 |:---:|:---:|
-| <img src="Screenshots/Screenshot%202026-10-10%20234158.png" width="100%"> | <img src="Screenshots/Screenshot%202026-10-10%20234128.png" width="100%"> |
-| *الشكل 15: السجل الزمني للحوادث والإنذارات المترابطة* | *الشكل 16: تفكيك العوامل الإحصائية المؤثرة في قرار الذكاء الاصطناعي* |
+| <img src="Screenshots/24_live_threat_monitoring_alerts.png" width="100%"> | <img src="Screenshots/11_network_attacks_catalog.png" width="100%"> |
+| *الشكل 15: مراقبة فورية للحوادث الأمنية المصنفة كحرجة (Critical)* | *الشكل 16: فهرس وتوقيعات هجمات كالي لينكس وأنظمة NIDS* |
 
 ---
 
-### خامساً: استخبارات التهديدات ومصفوفة مايتر (Threat Intel, MITRE & CTI)
+### خامساً: التموضع الجغرافي والتحقيق في الكيانات (GeoIP & Entity Investigation)
 
-| مصفوفة MITRE ATT&CK v16 ومؤشر سمعة VirusTotal | طابور فرز التهديدات عالية الخطورة (Threat Triage Queue) |
+| 06. خريطة التهديدات الجغرافية العالمية (GeoIP & ASN Map) | 29. التحقيق العميق في هوية الكيان (IP Entity Dossier) |
 |:---:|:---:|
-| <img src="Screenshots/Screenshot%202026-10-10%20234012.png" width="100%"> | <img src="Screenshots/Screenshot%202026-10-10%20234331.png" width="100%"> |
-| *الشكل 17: مصفوفة تقنيات الهجوم المتوهجة مع مقياس سمعة التهديد نصف الدائري* | *الشكل 18: قائمة أولويات التحقيق السريع للحوادث الأكثر خطورة* |
+| <img src="Screenshots/06_geoip_world_threat_map.png" width="100%"> | <img src="Screenshots/29_ip_entity_investigation_modal.png" width="100%"> |
+| *الشكل 17: الخريطة الجغرافية العالمية لمصادر الهجمات وتوزيع الأنظمة المستقلة* | *الشكل 18: ملف أمني متكامل للـ IP مع مؤشر DEFCON 2 وسلوك التدفقات* |
 
-| شريط مراقبة التنبيهات الأمنية الحية (Live Alerts Banner) | موسوعة هجمات الشبكة وقواعد المطابقة (Attacks Catalog) |
+| 04. فحص البنية التحتية للنطاقات (Domain Infra Inspection) | 09. استخراج ترويسات اتصالات TLS SNI المشفرة |
 |:---:|:---:|
-| <img src="Screenshots/Screenshot%202026-10-10%20234341.png" width="100%"> | <img src="Screenshots/Screenshot%202026-10-10%20234146.png" width="100%"> |
-| *الشكل 19: إشعارات فورية بالهجمات الحرجة مع مستوى الخطورة التكتيكي* | *الشكل 20: فهرس متكامل لهجمات كالي لينكس وأنظمة NIDS* |
+| <img src="Screenshots/04_domain_infra_inspection.png" width="100%"> | <img src="Screenshots/09_encrypted_tls_telemetry.png" width="100%"> |
+| *الشكل 19: فحص وتحديد مزودي الخدمات السحابية ونطاقات DNS الخارجية* | *الشكل 20: استخراج نطاقات ClientHello وإصدارات التشفير دون فك التشفير* |
 
 ---
 
-### سادساً: التموضع الجغرافي والتحقيق في الكيانات (GeoIP & Entity Dossier)
+### سادساً: محرك الاستدلال الجنائي 4Q وتوبولوجيا الهجوم (AI 4Q & Attack Topology)
 
-| الخريطة الجغرافية التفاعلية العالمية (GeoIP & ASN Map) | التحقيق العميق في هوية الكيان ومستوى DEFCON (IP Dossier) |
+| 16. قمرة الذكاء الاصطناعي 4Q (AI 4Q Grounding Cockpit) | 13. بطاقات سيناريو الحادثة التكتيكية (Incident Story Cards) |
 |:---:|:---:|
-| <img src="Screenshots/Screenshot%202026-10-10%20234036.png" width="100%"> | <img src="Screenshots/Screenshot%202026-10-10%20234646.png" width="100%"> |
-| *الشكل 21: التموضع الجغرافي لعناوين IP المهاجمة وأرقام الأنظمة المستقلة* | *الشكل 22: ملف أمني متكامل للـ IP مع تحليل النظراء والبصمة الجغرافية* |
+| <img src="Screenshots/16_ai_soc_cockpit_4q.png" width="100%"> | <img src="Screenshots/13_ai_4q_story_cards.png" width="100%"> |
+| *الشكل 21: الإجابة الآلية عن الأسئلة الأربعة (What, Who, When, Ongoing)* | *الشكل 22: بطاقات النيون المتفاعلة لسرد تفاصيل مسار الهجوم وسلوكه* |
 
-| فحص البنية التحتية لعناوين DNS الخارجية (Google & Cloudflare) | استخراج ترويسات اتصالات TLS SNI المشفرة دون فك التشفير |
+| 14. تطور مراحل الهجوم (Cyber Kill Chain Evolution) | 17. توبولوجيا الهجوم التفاعلية (Attack Topology Graph) |
 |:---:|:---:|
-| <img src="Screenshots/Screenshot%202026-10-10%20234021.png" width="100%"> | <img src="Screenshots/Screenshot%202026-10-10%20234120.png" width="100%"> |
-| *الشكل 23: استبيان النطاقات والخدمات السحابية المرتبطة بالحزم* | *الشكل 24: كشف النطاقات المستهدفة وإصدارات التشفير في ClientHello* |
+| <img src="Screenshots/14_cyber_killchain_evolution.png" width="100%"> | <img src="Screenshots/17_ai_attack_topology_graph.png" width="100%"> |
+| *الشكل 23: تحليل تصاعد وتطور الهجوم عبر مراحل سلسلة القتل السيبراني* | *الشكل 24: شبكة الهجوم العنقودية الموجهة بالقوة (D3.js Force Cluster)* |
 
 ---
 
-### سابعاً: توبولوجيا الهجوم، الرادار، والاستجابة التكتيكية (Topology, Radar & Playbooks)
+### سابعاً: الرادار التكتيكي والاستجابة الآلية (Radar & Containment Playbooks)
 
-| توبولوجيا الهجوم الحية والمخططات العنقودية (D3.js Graph) | رادار إنتروبيا الـ DNS لكشف DGA وقنوات الأنفاق |
+| 18. رادار إنتروبيا الـ DNS واتصالات C2 (DNS Entropy Radar) | 08. قوالب العزل والحظر التكتيكي بنقرة واحدة (SOC Playbook) |
 |:---:|:---:|
-| <img src="Screenshots/dash_test_ai_graphs.png" width="100%"> | <img src="Screenshots/dash_test_radar.png" width="100%"> |
-| *الشكل 25: شبكة الهجوم التفاعلية الموجهة بالقوة مع نبضات الحزم الحية* | *الشكل 26: رادار كشف أسماء النطاقات المشبوهة وقنوات تسريب البيانات* |
+| <img src="Screenshots/18_dns_tls_entropy_radar.png" width="100%"> | <img src="Screenshots/08_automated_containment_playbook.png" width="100%"> |
+| *الشكل 25: رادار كشف خوارزميات DGA وقنوات تسريب البيانات المشفرة Tunneling* | *الشكل 26: توليد فوري لقواعد جدران الحماية Linux iptables و Windows Firewall* |
 
-| قوالب أوامر العزل والحظر التكتيكي بنقرة واحدة (SOC Playbook) | لقطة إضافية للواجهة التكتيكية وتوزيع النوافذ |
+| 15. استراتيجية العزل والاحتواء الموصى بها (Mitigation Strategy) | 19. محاكي الذكاء الاصطناعي التفاعلي (AI Flow Sandbox) |
 |:---:|:---:|
-| <img src="Screenshots/Screenshot%202026-10-10%20234103.png" width="100%"> | <img src="Screenshots/Screenshot%202026-10-10%20233946.png" width="100%"> |
-| *الشكل 27: توليد فوري لقواعد جدران الحماية (iptables, nftables, PowerShell)* | *الشكل 28: نظرة شاملة على توزيع عناصر التحكم والأجنحة التكتيكية* |
+| <img src="Screenshots/15_ai_mitigation_strategy.png" width="100%"> | <img src="Screenshots/19_ai_flow_sandbox_simulator.png" width="100%"> |
+| *الشكل 27: توصيات المحرك الذكي للاحتواء الفوري وتقليل الأضرار* | *الشكل 28: بيئة تجريبية لتعديل خصائص التدفق واختبار استجابة النموذج* |
 
 ---
 
-### ثامناً: المحاكاة التفاعلية ومعيار النماذج الأكاديمي (Simulation & Benchmarks)
+### ثامناً: التقييم الأكاديمي ودليل المناقشة (Benchmark & Academic Viva Defense)
 
-| محاكي الذكاء الاصطناعي التفاعلي (Interactive AI Sandbox) | لوحة تقييم النماذج ودليل الدفاع الأكاديمي (Model Benchmark) |
-|:---:|:---:|
-| <img src="Screenshots/dash_test_sandbox.png" width="100%"> | <img src="Screenshots/dash_test_benchmark.png" width="100%"> |
-| *الشكل 29: بيئة تفاعلية لتعديل خصائص التدفق واختبار استجابة النموذج* | *الشكل 30: مصفوفة الارتباك (دقة 99.90%) والدليل الأكاديمي لمناقشة المشروع* |
+| 20. لوحة تقييم النماذج ودليل المناقشة الأكاديمية (Model Benchmark & Viva Defense) |
+|:---:|
+| <img src="Screenshots/20_model_evaluation_benchmark.png" width="60%"> |
+| *الشكل 29: مصفوفة الارتباك (دقة 99.90%) والدليل الأكاديمي الشامل للجان التحكيم ومناقشة المشروع* |
+
+</div>
 
 ---
 
@@ -329,11 +331,11 @@
 
 ---
 
-## 📁 9. هيكل ملفات المشروع (Directory Structure)
+## 📁 9. هيكل ملفات المشروع الحالي (Project Directory Structure)
 
 ```plaintext
 NetPacket-Sentinel-AI/
-├── Screenshots/                   # معرض لقطات الشاشة التوثيقية (30 صورة عالية الدقة)
+├── Screenshots/                   # معرض لقطات الشاشة المرتبة بأسماء دلالية مرقمة (01 إلى 29)
 ├── assets/                        # الشعارات والأيقونات والرموز التكتيكية
 ├── models/                        # نماذج الذكاء الاصطناعي والميزات الإحصائية
 │   ├── feature_columns.pkl        # أعمدة الميزات الـ 69 المعيارية

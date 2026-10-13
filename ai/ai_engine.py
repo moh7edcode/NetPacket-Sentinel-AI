@@ -40,7 +40,7 @@ warnings.filterwarnings("ignore")
 # ==============================================================================
 # Global Directories & Configuration
 # ==============================================================================
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODELS_DIR = os.path.join(BASE_DIR, "models")
 TEMP_UPLOADS_DIR = os.path.join(MODELS_DIR, "temp_uploads")
 EVIDENCE_VAULT_DIR = os.path.join(MODELS_DIR, "evidence_vault")

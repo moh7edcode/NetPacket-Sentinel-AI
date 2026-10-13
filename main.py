@@ -1,3 +1,9 @@
+import sys
+import os
+_PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+if _PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, _PROJECT_ROOT)
+
 """
 NetPacket Inspector Pro - Main Execution Entry Point
 Supports Interactive GUI, CLI Forensics, Live SOC Dashboard, and Automated Reporting.
@@ -15,14 +21,14 @@ if hasattr(sys.stdout, "reconfigure"):
     except Exception:
         pass
 
-from pcap_parser import PcapReader
-from analyzer import TrafficAnalyzer
-from threat_detector import ThreatDetector
-from stream_profiler import StreamProfiler
-from threat_intel import ThreatIntelEngine
-from exporter import PacketExporter
-from dashboard_generator import DashboardGenerator
-from enhanced_sample_generator import generate_enhanced_malicious_sample
+from core.pcap_parser import PcapReader
+from core.analyzer import TrafficAnalyzer
+from intel.threat_detector import ThreatDetector
+from core.stream_profiler import StreamProfiler
+from intel.threat_intel import ThreatIntelEngine
+from ui.exporter import PacketExporter
+from ui.dashboard_generator import DashboardGenerator
+from samples.enhanced_sample_generator import generate_enhanced_malicious_sample
 
 
 def print_cli_summary(filepath: str, vt_api_key: str = None, export_path: str = None, open_dashboard: bool = False):
@@ -117,7 +123,7 @@ def main():
         sample_path = "forensic_attack_sample.pcap"
         generate_enhanced_malicious_sample(sample_path)
         print(f"[+] Multi-vector attack sample capture generated at: {sample_path}")
-        from app_gui import launch_gui
+        from ui.app_gui import launch_gui
         launch_gui(sample_path)
         return
 
@@ -140,7 +146,7 @@ def main():
         return
 
     # Default: Launch Interactive Master GUI
-    from app_gui import launch_gui
+    from ui.app_gui import launch_gui
     launch_gui(args.file)
 
 

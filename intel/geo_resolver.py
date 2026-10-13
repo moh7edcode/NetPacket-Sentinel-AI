@@ -7,7 +7,7 @@ import socket
 import json
 import urllib.request
 from typing import Dict, Any, List, Optional
-from pcap_parser import ParsedPacket
+from core.pcap_parser import ParsedPacket
 
 
 class GeoResolverEngine:

@@ -10,15 +10,15 @@ import os
 import datetime
 from typing import List, Dict, Any
 
-from pcap_parser import ParsedPacket
-from analyzer import TrafficAnalyzer
-from threat_detector import ThreatDetector, ThreatAlert
-from stream_profiler import StreamProfiler
-from threat_intel import ThreatIntelEngine
-from geo_resolver import GeoResolverEngine
-from file_carver import FileCarverEngine
-from ai_triage_playbook import IncidentTriageEngine
-from assets_data import EMBLEM_B64
+from core.pcap_parser import ParsedPacket
+from core.analyzer import TrafficAnalyzer
+from intel.threat_detector import ThreatDetector, ThreatAlert
+from core.stream_profiler import StreamProfiler
+from intel.threat_intel import ThreatIntelEngine
+from intel.geo_resolver import GeoResolverEngine
+from core.file_carver import FileCarverEngine
+from ai.ai_triage_playbook import IncidentTriageEngine
+from ui.assets_data import EMBLEM_B64
 
 
 class PacketExporter:

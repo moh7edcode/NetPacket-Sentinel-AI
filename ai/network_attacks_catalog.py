@@ -4,8 +4,8 @@ Detailed reference of network attack vectors, packet mechanics, MITRE ATT&CK map
 """
 
 from typing import List, Dict, Any
-from pcap_parser import ParsedPacket
-from threat_detector import ThreatDetector, ThreatAlert
+from core.pcap_parser import ParsedPacket
+from intel.threat_detector import ThreatDetector, ThreatAlert
 
 
 class NetworkAttackDefinition:

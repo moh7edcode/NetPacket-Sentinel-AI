@@ -331,38 +331,50 @@
 
 ---
 
-## 📁 9. هيكل ملفات المشروع الحالي (Project Directory Structure)
+## 📁 9. هيكل ملفات المشروع المنظم (Modular Project Structure)
 
 ```plaintext
 NetPacket-Sentinel-AI/
-├── Screenshots/                   # معرض لقطات الشاشة المرتبة بأسماء دلالية مرقمة (01 إلى 29)
-├── assets/                        # الشعارات والأيقونات والرموز التكتيكية
-├── models/                        # نماذج الذكاء الاصطناعي والميزات الإحصائية
-│   ├── feature_columns.pkl        # أعمدة الميزات الـ 69 المعيارية
-│   ├── isolation_forest_model.pkl # نموذج كشف هجمات اليوم الصفر (Zero-Day)
-│   ├── label_encoder.pkl          # مشفر تصنيفات الهجمات الـ 15
-│   ├── scaler.pkl                 # مقياس تطبيع البيانات الإحصائية
-│   └── evidence_vault/            # خزنة الأدلة الجنائية وملفات الـ PCAP المحفوظة
-├── ai_engine.py                   # محرك الذكاء الاصطناعي والهجين والاستدلال الجنائي 4Q
-├── ai_triage_playbook.py          # محرك فرز الحوادث وتوليد سيناريوهات التهديد
-├── analyzer.py                    # محرك التحليل الإحصائي وتدفقات الحزم
-├── app_gui.py                     # قمرة القيادة التكتيكية وواجهة سطح المكتب (pywebview)
-├── config_manager.py              # مدير إعدادات النظام ومفاتيح الـ API
-├── dashboard.html                 # واجهة المستخدم الزجاجية التكتيكية
-├── dashboard_generator.py         # مولد تقارير لوحات المراقبة التفاعلية
-├── exporter.py                    # محرك تصدير الأدلة والتقارير التنفيذية (HTML/JSON/CSV)
-├── file_carver.py                 # محرك نحت واستخراج الملفات المضمنة في الحزم
-├── geo_resolver.py                # محرك التموضع الجغرافي لعناوين الـ IP وأرقام الـ ASN
-├── main.py                        # نقطة الدخول الرئيسية للتشغيل
-├── network_attacks_catalog.py     # موسوعة هجمات الشبكة وقواعد المطابقة
-├── payload_decoder.py             # محرك فك تشفير الحمولات المشوشة (Base64/Gzip/XOR)
-├── pcap_parser.py                 # محرك تفكيك الحزم الخام وقراءة ملفات PCAP/PCAPNG
-├── stream_follower.py             # محرك تتبع وإعادة تركيب تدفقات جلسات TCP/HTTP
-├── stream_profiler.py             # محلل أنماط الاتصال والملفات التعريفية للـ IPs
-├── threat_detector.py             # كاشف التهديدات والقواعد الأمنية
-├── threat_intel.py                # محرك تكامل استخبارات التهديدات مع VirusTotal
-├── requirements.txt               # قائمة الاعتماديات والمكتبات المطلوبة
-└── README.md                      # التوثيق الشامل لقمرة القيادة التكتيكية
+├── core/                         # محركات التفكيك الجنائي وتحليل الحزم الخام
+│   ├── pcap_parser.py            # فك تشريح الحزم L2-L7
+│   ├── analyzer.py               # تحليل التدفقات ومعدلات الحزم
+│   ├── stream_follower.py        # إعادة تركيب جلسات TCP/HTTP
+│   ├── stream_profiler.py        # بصمات سلوك الـ IP
+│   ├── file_carver.py            # نحت واستخراج الملفات المضمنة
+│   ├── payload_decoder.py        # فك تشفير Base64/Gzip/XOR
+│   └── config_manager.py         # مدير إعدادات النظام ومفاتيح الـ API
+│
+├── ai/                           # محركات الذكاء الاصطناعي والاستدلال الجنائي
+│   ├── ai_engine.py              # محرك Random Forest + Isolation Forest + 4Q
+│   ├── ai_triage_playbook.py     # محرك فرز الحوادث وتوليد السيناريوهات
+│   └── network_attacks_catalog.py# موسوعة هجمات كالي ومطابقة التوقيعات
+│
+├── intel/                        # استخبارات التهديدات والتموضع الجغرافي
+│   ├── threat_detector.py        # كاشف التهديدات والقواعد الأمنية
+│   ├── threat_intel.py           # تكامل VirusTotal v3 API
+│   └── geo_resolver.py           # محرك GeoIP وأرقام الـ ASN
+│
+├── ui/                           # واجهة المستخدم وقمرة القيادة التكتيكية
+│   ├── app_gui.py                # تطبيق سطح المكتب عبر pywebview
+│   ├── dashboard.html            # واجهة الـ Glassmorphism التكتيكية
+│   ├── dashboard_generator.py    # مولد تقارير لوحات المراقبة
+│   ├── assets_data.py            # أيقونات وشعارات الواجهة
+│   └── exporter.py               # محرك تصدير التقارير (HTML/JSON/CSV)
+│
+├── samples/                      # عينات ملفات الـ PCAP ومولدات حركة المرور
+│   ├── sample_traffic.pcap
+│   ├── forensic_attack_sample.pcap
+│   ├── test_sample.pcap
+│   ├── sample_generator.py
+│   └── enhanced_sample_generator.py
+│
+├── models/                       # نماذج الذكاء الاصطناعي والميزات الإحصائية
+├── Screenshots/                  # معرض لقطات الشاشة المرتبة بأسماء دلالية (01 إلى 29)
+├── assets/                       # الشعارات والأيقونات والرموز التكتيكية
+├── main.py                       # نقطة التشغيل الرئيسية (CLI & GUI Entrypoint)
+├── app_gui.py                    # مشغل الواجهة التكتيكية المباشر
+├── requirements.txt              # مكتبات واعتماديات المشروع
+└── README.md                     # التوثيق الشامل لقمرة القيادة التكتيكية
 ```
 
 ---

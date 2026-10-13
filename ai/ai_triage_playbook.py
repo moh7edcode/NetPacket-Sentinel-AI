@@ -4,8 +4,8 @@ Synthesizes chronological attack timelines, kill-chain phases, and tactical SOC 
 """
 
 from typing import List, Dict, Any
-from threat_detector import ThreatAlert
-from pcap_parser import ParsedPacket
+from intel.threat_detector import ThreatAlert
+from core.pcap_parser import ParsedPacket
 
 
 class IncidentTriageEngine:

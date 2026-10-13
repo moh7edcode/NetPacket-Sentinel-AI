@@ -4,7 +4,7 @@ Reassembles bidirectional conversation streams, decodes payload chunks, and trac
 """
 
 from typing import List, Dict, Any, Optional, Tuple
-from pcap_parser import ParsedPacket
+from core.pcap_parser import ParsedPacket
 
 
 class StreamChunk:

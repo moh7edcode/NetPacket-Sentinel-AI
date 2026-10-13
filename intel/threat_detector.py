@@ -5,8 +5,8 @@ Detects network reconnaissance scans, DNS tunneling, ARP spoofing, cleartext cre
 
 from collections import defaultdict, Counter
 from typing import List, Dict, Any, Set
-from pcap_parser import ParsedPacket
-from payload_decoder import PayloadDecoder
+from core.pcap_parser import ParsedPacket
+from core.payload_decoder import PayloadDecoder
 import base64
 import re
 

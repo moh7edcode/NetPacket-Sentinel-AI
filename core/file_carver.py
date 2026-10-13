@@ -7,7 +7,7 @@ import os
 import re
 import hashlib
 from typing import List, Dict, Any
-from pcap_parser import ParsedPacket
+from core.pcap_parser import ParsedPacket
 
 
 class CarvedFile:

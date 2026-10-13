@@ -5,8 +5,8 @@ Groups packet captures into conversational streams and detailed IP endpoint prof
 
 from collections import defaultdict, Counter
 from typing import List, Dict, Any, Tuple
-from pcap_parser import ParsedPacket
-from threat_detector import ThreatDetector, ThreatAlert
+from core.pcap_parser import ParsedPacket
+from intel.threat_detector import ThreatDetector, ThreatAlert
 
 
 class IPProfile:

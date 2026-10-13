@@ -11,8 +11,8 @@ import urllib.error
 import hashlib
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Dict, Any, List, Optional
-from pcap_parser import ParsedPacket
-from config_manager import ConfigManager
+from core.pcap_parser import ParsedPacket
+from core.config_manager import ConfigManager
 
 
 class ThreatIntelEngine:

@@ -5,7 +5,7 @@ Analyzes packet streams for protocol breakdowns, top talkers, conversational str
 
 from collections import Counter, defaultdict
 from typing import List, Dict, Any
-from pcap_parser import ParsedPacket
+from core.pcap_parser import ParsedPacket
 
 
 class TrafficAnalyzer:

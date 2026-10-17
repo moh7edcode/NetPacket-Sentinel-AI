@@ -402,6 +402,44 @@ python app_gui.py
 
 ---
 
+## 🌐 11. تشغيل واجهة الويب الحديثة (Decoupled Web App — React + FastAPI)
+
+The modern web UI (see `ARCHITECTURE.md`) splits the app into a FastAPI backend that wraps the existing engine modules **unchanged**, and a React 18 + TypeScript + Vite frontend.
+
+### 1. Backend (FastAPI)
+
+```bash
+# from the repository root — same Python env as the desktop app (3.10+)
+python -m pip install fastapi "uvicorn[standard]" python-multipart
+
+python -m uvicorn backend.main:app --port 8010 --reload
+```
+
+* API docs: http://localhost:8010/docs · health check: `GET /api/health`
+* **Port note:** `8000` is frequently taken by other local apps; the frontend dev proxy defaults to **8010**. Override with `VITE_BACKEND_PORT` if you run the backend elsewhere.
+
+### 2. Frontend (Vite dev server)
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+* Vite picks the first free port starting at `5173` (if `5173`/`5174` are occupied by other apps it will land on `5175` — check the URL it prints).
+* The `/api` and `/ws` routes are proxied to the backend automatically.
+
+### 3. Production build
+
+```bash
+cd frontend && npm run build     # outputs frontend/dist
+```
+
+### Features preserved
+Every `CyberBridgeAPI` capability from `app_gui.py` is mirrored as a REST/WS endpoint: upload + live progress WebSocket, packet dissector/hex/entropy, stream following, IP inspection, threats + MITRE, topology + GeoIP, carved files export, attacks encyclopedia, AI triage/block rules, sandbox simulator, presets, VT key config, and HTML/JSON/CSV/dashboard reports.
+
+---
+
 ## ⚖️ إخلاء المسؤولية القانونية والأخلاقية (Disclaimer)
 
 > **تنبيه هام:**  

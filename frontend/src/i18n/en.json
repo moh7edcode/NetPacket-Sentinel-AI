@@ -1,0 +1,159 @@
+{
+  "app": {
+    "name": "NetPacket Sentinel AI",
+    "tagline": "Tactical DFIR & Deep Packet Forensics"
+  },
+  "nav": {
+    "dashboard": "Analysis Dashboard",
+    "dissector": "Packet Dissector",
+    "threats": "Threats & MITRE ATT&CK",
+    "topology": "Live Topology",
+    "streams": "Streams & Payloads",
+    "carved": "Carved Files",
+    "encyclopedia": "Attacks Encyclopedia",
+    "triage": "AI Triage & Response",
+    "reports": "Reports"
+  },
+  "topbar": {
+    "theme_light": "Switch to cyber dark",
+    "theme_dark": "Switch to enterprise light",
+    "language": "Language",
+    "vt_key": "VirusTotal Key",
+    "vt_key_hint": "Stored locally; enables live VT reputation lookups",
+    "vt_key_saved": "VirusTotal API key saved",
+    "upload": "Upload PCAP",
+    "analyzing": "Analyzing"
+  },
+  "upload": {
+    "title": "Load a Capture",
+    "drop": "Drop a .pcap / .pcapng file here, or click to browse",
+    "or": "or",
+    "presets": "Attack scenario presets",
+    "preset_loaded": "Preset scenario loading",
+    "busy": "Running full forensics pipeline…"
+  },
+  "dashboard": {
+    "kpis": "Mission Telemetry",
+    "packets": "Total Packets",
+    "volume": "Total Volume",
+    "duration": "Duration",
+    "transfer": "Transfer Rate",
+    "conversations": "Active Conversations",
+    "unique_ips": "Unique Endpoints",
+    "defcon": "Threat Posture",
+    "timeline": "Traffic Timeline",
+    "protocols": "Protocol Distribution",
+    "top_talkers": "Top Talkers",
+    "threats": "Threat Summary",
+    "latest_alerts": "Latest Alerts",
+    "ai_engine": "Hybrid AI Engine",
+    "rf": "Random Forest Classification",
+    "iforest": "Isolation Forest Anomalies",
+    "zeroday": "Zero-Day Outliers Flagged",
+    "confidence": "Model Confidence",
+    "mitre": "MITRE ATT&CK Hits",
+    "topology": "Network Topology",
+    "fourq": "Forensic 4Q Incident Storyline",
+    "q1": "Who attacked?",
+    "q2": "What happened?",
+    "q3": "When?",
+    "q4": "How?",
+    "targets": "Targets",
+    "flows": "flows",
+    "iocs": "IoC & Reputation Strip"
+  },
+  "dissector": {
+    "filter_placeholder": "Display filter — e.g. ip.addr==10.0.0.5  tcp.port==443  dns",
+    "tree": "Protocol Tree",
+    "hex": "Hex Dump",
+    "entropy": "Shannon Entropy",
+    "follow": "Follow Stream",
+    "inspect_ip": "Inspect IP",
+    "no_selection": "Select a packet to dissect",
+    "decoded": "Auto De-obfuscation"
+  },
+  "threats": {
+    "title": "Detected Threats",
+    "storyline": "Incident Storyline",
+    "matrix": "MITRE ATT&CK v16 Matrix",
+    "detected": "Detected",
+    "not_detected": "Not Detected"
+  },
+  "topology_page": {
+    "title": "Live Network Topology",
+    "drilldown": "Entity Deep Investigation",
+    "peers": "Communicated Peers",
+    "ports": "Port Footprint",
+    "carved_for": "Carved Artifacts",
+    "expand": "Expand",
+    "nodes": "nodes",
+    "links": "links",
+    "hint": "click a node for entity deep investigation",
+    "legend_malicious": "Malicious",
+    "legend_suspicious": "Suspicious",
+    "legend_safe": "Private / safe",
+    "legend_external": "External"
+  },
+  "streams_page": {
+    "title": "Conversation Streams",
+    "decoder": "Payload Decoder Sandbox",
+    "decoder_hint": "Paste Base64 / hex / URL / XOR-encoded payload to reveal obfuscation chains",
+    "decode": "Decode",
+    "client": "Client",
+    "server": "Server"
+  },
+  "carved_page": {
+    "title": "Files Extracted From Traffic",
+    "download": "Export to Disk",
+    "empty": "No files carved from this capture."
+  },
+  "encyclopedia_page": {
+    "title": "Network Attacks Encyclopedia",
+    "triggered_packets": "Triggering Packets",
+    "mechanism": "Attack Mechanism",
+    "mitigation": "Mitigation",
+    "search": "Search attacks…"
+  },
+  "triage_page": {
+    "title": "AI Triage & Automated Response",
+    "block_iptables": "iptables Block Rule",
+    "block_powershell": "PowerShell Block Rule",
+    "copy": "Copy",
+    "copied": "Copied to clipboard",
+    "download_sh": "Download Containment Script",
+    "playbook": "SOC Remediation Playbook",
+    "sandbox": "AI Sandbox Simulator",
+    "run_sim": "Run Simulation",
+    "benchmarks": "Model Benchmarks"
+  },
+  "reports_page": {
+    "title": "Forensic Reports",
+    "html": "Interactive Executive HTML",
+    "json": "JSON Forensic Dissection",
+    "csv": "CSV Packet Summary",
+    "dashboard": "Standalone SOC Dashboard",
+    "generate": "Generate",
+    "generating": "Generating report…",
+    "generated": "Report ready",
+    "preview": "Preview (Executive Summary)"
+  },
+  "common": {
+    "severity": "Severity",
+    "protocol": "Protocol",
+    "close": "Close",
+    "loading": "Loading…",
+    "error": "Something went wrong",
+    "no_data": "Analyze a PCAP to populate this view.",
+    "bytes": "bytes",
+    "packets": "packets",
+    "ip": "IP Address",
+    "source": "Source",
+    "destination": "Destination",
+    "actions": "Actions",
+    "rule": "Rule",
+    "time": "Time",
+    "download": "Download",
+    "open_dashboard": "Open Dashboard",
+    "back": "Back"
+  }
+}

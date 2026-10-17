@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   forceCenter,
   forceCollide,
@@ -35,9 +35,10 @@ export function ForceGraph({
 }) {
   const [size, setSize] = useState({ w: 600, h: height });
   const [hover, setHover] = useState<string | null>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = document.getElementById("fg-wrap");
+    const el = wrapRef.current;
     if (!el) return;
     const ro = new ResizeObserver(() => setSize({ w: el.clientWidth, h: height }));
     ro.observe(el);
@@ -72,7 +73,7 @@ export function ForceGraph({
   const byId = useMemo(() => new Map(nodes.map((n) => [n.id, n])), [nodes]);
 
   return (
-    <div id="fg-wrap" className="relative w-full" style={{ height }}>
+    <div ref={wrapRef} className="relative w-full" style={{ height }}>
       <svg width={size.w} height={size.h} className="block">
         <style>{`
           @keyframes dashmove { to { stroke-dashoffset: -14; } }

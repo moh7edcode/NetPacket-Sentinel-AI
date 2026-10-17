@@ -10,6 +10,10 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SeverityBadge } from "@/components/SeverityBadge";
+import { cn } from "@/lib/utils";
+import { BenchmarksCard } from "@/components/triage/BenchmarksCard";
+import { CtiCard } from "@/components/triage/CtiCard";
+import { IncidentsTable } from "@/components/triage/IncidentsTable";
 import type { AiData } from "@/services/types";
 
 function CopyBlock({ title, code }: { title: string; code: string }) {
@@ -59,8 +63,8 @@ function BlockRules({ ip, ai }: { ip: string; ai?: AiData }) {
         </div>
         {result?.playbook?.iptables && <CopyBlock title={t("triage_page.block_iptables")} code={result.playbook.iptables} />}
         {result?.playbook?.powershell && <CopyBlock title={t("triage_page.block_powershell")} code={result.playbook.powershell} />}
-        {ai?.cti_summary && typeof ai.cti_summary === "object" && "firewall_cmd" in ai.cti_summary && (
-          <CopyBlock title="Recommended Edge Rule" code={String((ai.cti_summary as Record<string, unknown>).firewall_cmd)} />
+        {ai?.cti_summary?.firewall_cmd && (
+          <CopyBlock title="Recommended Edge Rule" code={ai.cti_summary.firewall_cmd} />
         )}
       </CardContent>
     </Card>
@@ -126,6 +130,7 @@ export default function TriagePage() {
       <PageHeader icon={Cpu} title={t("nav.triage")} />
       <div className="grid gap-3 lg:grid-cols-3">
       <div className="space-y-3 lg:col-span-2">
+        {ai?.cti_summary?.threat_ip && <CtiCard ai={ai} />}
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center gap-2"><ScrollText className="h-4 w-4 text-primary" />{t("triage_page.playbook")}</CardTitle>
@@ -166,6 +171,10 @@ export default function TriagePage() {
         </Card>
         <Sandbox />
       </div>
+      </div>
+      <div className={cn("mt-3 grid gap-3", (ai?.incidents?.length ?? 0) > 0 ? "lg:grid-cols-2" : "lg:grid-cols-1")}>
+        <IncidentsTable incidents={ai?.incidents ?? []} />
+        <BenchmarksCard />
       </div>
     </div>
   );

@@ -60,7 +60,11 @@
     "q4": "How?",
     "targets": "Targets",
     "flows": "flows",
-    "iocs": "IoC & Reputation Strip"
+    "iocs": "IoC & Reputation Strip",
+    "velocity": "Incident Velocity Timeline",
+    "no_incident_velocity": "No incident velocity data yet.",
+    "vector_map": "Attack Vector Map",
+    "no_vector_data": "No attack vector relationships yet."
   },
   "dissector": {
     "filter_placeholder": "Display filter — e.g. ip.addr==10.0.0.5  tcp.port==443  dns",
@@ -100,7 +104,9 @@
     "decoder_hint": "Paste Base64 / hex / URL / XOR-encoded payload to reveal obfuscation chains",
     "decode": "Decode",
     "client": "Client",
-    "server": "Server"
+    "server": "Server",
+    "telemetry": "C2 / Exfil Telemetry",
+    "no_beaconing": "No beaconing candidates detected."
   },
   "carved_page": {
     "title": "Files Extracted From Traffic",
@@ -124,7 +130,24 @@
     "playbook": "SOC Remediation Playbook",
     "sandbox": "AI Sandbox Simulator",
     "run_sim": "Run Simulation",
-    "benchmarks": "Model Benchmarks"
+    "benchmarks": "Model Benchmarks",
+    "cti": "CTI Threat Summary",
+    "technique": "Technique / Sub-technique",
+    "targets": "Targets",
+    "window": "Time Window",
+    "peak_rate": "Peak Rate",
+    "mitigation": "Mitigation",
+    "evidence": "Evidence Integrity",
+    "incidents": "Correlated Incidents",
+    "source": "Source",
+    "confidence": "Confidence",
+    "viva": "Academic Viva Defense Guide",
+    "bm_accuracy": "Accuracy",
+    "bm_precision": "Precision",
+    "bm_recall": "Recall",
+    "bm_f1": "F1-Score",
+    "bm_samples": "Test Samples",
+    "bm_class": "Class"
   },
   "reports_page": {
     "title": "Forensic Reports",

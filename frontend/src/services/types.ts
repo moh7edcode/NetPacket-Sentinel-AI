@@ -284,6 +284,82 @@ export interface Grounding4Q {
   containment_command?: string;
 }
 
+export interface DnsTelemetryRow {
+  packet_num: number;
+  timestamp: number;
+  client_ip: string;
+  query: string;
+  record_type: string;
+  rcode: string;
+  entropy: number;
+  flag: string;
+  is_tunneling: boolean;
+}
+
+export interface TlsTelemetryRow {
+  packet_num: number;
+  timestamp: number;
+  src_ip: string;
+  dst_ip: string;
+  dst_port: number;
+  sni: string;
+  version: string;
+}
+
+export interface BeaconRow {
+  source_ip: string;
+  destination_ip: string;
+  destination_port: number;
+  flow_count: number;
+  mean_interval_sec: number;
+  std_interval_sec: number;
+  coefficient_variation: number;
+  verdict: string;
+}
+
+export interface IncidentRow {
+  incident_id: string;
+  source_ip: string;
+  targets: string[];
+  flows_count: number;
+  attack_flows_count: number;
+  indicators: string[];
+  mitre_techniques: string[];
+  severity: string;
+  confidence: number;
+  start_time: string;
+  end_time: string;
+}
+
+export interface CtiSummary {
+  threat_ip: string;
+  vt_score: number;
+  severity: string;
+  mitre_tid: string;
+  tactic: string;
+  technique: string;
+  subtechnique: string;
+  mitigation: string;
+  targets: string[];
+  time_window: string;
+  peak_rate: string;
+  soc_action: string;
+  firewall_cmd: string;
+}
+
+export interface BenchmarkData {
+  benchmark: {
+    accuracy: number;
+    precision: number;
+    recall: number;
+    f1_score: number;
+    test_samples: number;
+    confusion_matrix: { tn: number; fp: number; fn: number; tp: number };
+    class_reports: { class: string; precision: number; recall: number; f1: number; support: number }[];
+  };
+  viva_guide: { question: string; answer: string }[];
+}
+
 export interface AiData {
   has_data: boolean;
   error?: string;
@@ -294,17 +370,17 @@ export interface AiData {
   attack_pct: number;
   ip_summaries: Record<string, unknown>[];
   grounding_4q: Grounding4Q;
-  incidents: Record<string, unknown>[];
-  dns_telemetry: Record<string, unknown>[];
-  tls_telemetry: Record<string, unknown>[];
-  beaconing: Record<string, unknown>[];
+  incidents: IncidentRow[];
+  dns_telemetry: DnsTelemetryRow[];
+  tls_telemetry: TlsTelemetryRow[];
+  beaconing: BeaconRow[];
   hierarchical_tree: Record<string, unknown>[];
   active_mitre_tids: string[];
   evidence_hashes: { sha256: string; md5: string };
   vector_map: { attackers: string[]; targets: string[]; benign: string[]; links: { source: string; target: string; decision: string; count: number }[] };
   velocity_timeline: { time: string; attack: number; suspicious: number; normal: number }[];
   matrix_tactics: { name: string; sub: string; techniques: { id: string; name: string }[] }[];
-  cti_summary: Record<string, unknown>;
+  cti_summary: CtiSummary;
   anomaly_hist: { bin: number; count: number }[];
   presets: { id: string; name: string; description: string; full_path?: string }[];
 }

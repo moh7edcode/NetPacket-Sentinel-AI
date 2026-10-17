@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DefconGauge } from "@/components/dashboard/DefconGauge";
+import { VelocityCard } from "@/components/dashboard/VelocityCard";
+import { VectorMapCard } from "@/components/dashboard/VectorMapCard";
 import { FourQCard } from "@/components/dashboard/FourQCard";
 import { IocStrip } from "@/components/dashboard/IocStrip";
 import { AiPanel } from "@/components/dashboard/AiPanel";
@@ -87,6 +89,11 @@ export default function DashboardPage() {
       </div>
 
       <AiPanel ai={summary.ai_data} />
+
+      <div className="grid gap-3 lg:grid-cols-2">
+        <VelocityCard ai={summary.ai_data} />
+        <VectorMapCard ai={summary.ai_data} />
+      </div>
 
       <MitreHeat threats={summary.threats} ai={summary.ai_data} />
 

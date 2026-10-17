@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { STREAM_TEXT, formatBytes } from "@/lib/utils";
+import { TelemetryPanel } from "@/components/streams/TelemetryPanel";
 
 function DecoderSandbox() {
   const { t } = useTranslation();
@@ -53,9 +54,10 @@ function DecoderSandbox() {
 export default function StreamsPage() {
   const { t } = useTranslation();
   const { data: streams } = useQuery({ queryKey: ["streams-list"], queryFn: api.streams });
+  const { data: ai } = useQuery({ queryKey: ["ai"], queryFn: api.ai });
 
   return (
-    <div className="space-y-0">
+    <div className="space-y-3">
       <PageHeader icon={Activity} title={t("nav.streams")} count={streams?.length ?? 0} />
       <div className="grid gap-3 lg:grid-cols-3">
       <Card className="lg:col-span-2">
@@ -104,6 +106,7 @@ export default function StreamsPage() {
         </Card>
       </div>
       </div>
+      <TelemetryPanel ai={ai} />
     </div>
   );
 }

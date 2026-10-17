@@ -1,5 +1,6 @@
 import type {
   AiData,
+  BenchmarkData,
   CarvedFile,
   CatalogAttack,
   Defcon,
@@ -98,9 +99,7 @@ export const api = {
   ai: () => request<AiData>("/api/ai"),
   aiSandbox: (params: Record<string, unknown>) =>
     request<Record<string, unknown>>("/api/ai/sandbox", { method: "POST", ...json({ params }) }),
-  aiBenchmarks: () => request<{ benchmark: Record<string, unknown>; viva_guide: { question: string; answer: string }[] }>(
-      "/api/ai/benchmarks",
-    ),
+  aiBenchmarks: () => request<BenchmarkData>("/api/ai/benchmarks"),
   presets: () => request<{ presets: { id: string; name: string; description: string }[] }>("/api/ai/presets"),
   loadPreset: (id: string) =>
     request<{ job_id: string }>(`/api/ai/presets/${encodeURIComponent(id)}/load`, { method: "POST" }),

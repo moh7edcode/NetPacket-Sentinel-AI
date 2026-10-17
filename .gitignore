@@ -58,3 +58,7 @@ backend/uploads/
 uvicorn_dev.log
 vite_dev.log
 .playwright-mcp/
+
+# Local CLI session state & crash dumps
+.qoder/settings.local.json
+*.stackdump

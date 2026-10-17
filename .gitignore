@@ -41,3 +41,24 @@ env/
 .DS_Store
 Thumbs.db
 *.swp
+
+# ==============================================================================
+# Web app (frontend/ + backend/ API layer)
+# ==============================================================================
+
+# Node dependencies & build output
+node_modules/
+frontend/dist/
+
+# Runtime-generated session artifacts (uploads, dashboards, reports)
+backend/exports/
+backend/uploads/
+
+# Dev-server logs & browser automation scratch
+uvicorn_dev.log
+vite_dev.log
+.playwright-mcp/
+
+# Local CLI session state & crash dumps
+.qoder/settings.local.json
+*.stackdump
